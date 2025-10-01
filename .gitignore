@@ -1,5 +1,10 @@
 *
+!.gitignore
+!.gitmodules
 !commands/
 !commands/**
+!agents
+!templates/
+!templates/**
 !README.md
 !CLAUDE.md

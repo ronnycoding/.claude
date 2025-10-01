@@ -28,22 +28,22 @@ Sophisticated prompt templates for GitHub operations:
   - Phase-based progress tracking (analysis, implementation, integration)
   - Tree view and status dashboard output
 
-### Specialized Agents (`agents/`)
-Collection of 83+ domain-specific AI subagents across three Claude model tiers:
+### Specialized Agents (`agents/` - Git Submodule)
+Collection of specialized AI subagents from [wshobson/agents](https://github.com/wshobson/agents) repository.
 
-**Model Distribution:**
-- **Haiku (11 agents)**: Fast, focused tasks - context management, SEO optimization
-- **Sonnet (46 agents)**: Standard development - language-specific, frontend, infrastructure
-- **Opus (22 agents)**: Complex reasoning - architecture, security, critical analysis
+Provides domain-specific specialists optimized across Claude model tiers (Haiku/Sonnet/Opus) for:
+- Architecture & Design
+- Programming Languages
+- Infrastructure & Operations
+- Security & Quality
+- AI/ML & Data
+- Documentation & Business
 
-**Key Agent Categories:**
-- Architecture & Design: `backend-architect`, `cloud-architect`, `kubernetes-architect`
-- Security & Quality: `code-reviewer`, `security-auditor`, `performance-engineer`
-- Infrastructure: `devops-troubleshooter`, `deployment-engineer`, `terraform-specialist`
-- AI/ML: `ai-engineer`, `ml-engineer`, `mlops-engineer`
-- Documentation: `docs-architect`, `api-documenter`, `tutorial-engineer`
-
-Agents coordinate automatically for multi-agent workflows (see `agents/README.md` for patterns).
+See `agents/README.md` for:
+- Complete agent catalog and capabilities
+- Model distribution and selection criteria
+- Multi-agent orchestration patterns
+- Usage examples and best practices
 
 ### Templates (`templates/`)
 GitHub-specific templates:

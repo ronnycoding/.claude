@@ -14,44 +14,22 @@ This repository extends Claude Code with:
 
 ### 🤖 Specialized AI Agents
 
-Collection of 83+ domain-specific subagents optimized for different Claude models:
+Collection of specialized domain-specific subagents from the [wshobson/agents](https://github.com/wshobson/agents) repository (included as git submodule).
 
-#### Model Distribution
-| Model  | Count | Use Case                                                 |
-|--------|-------|----------------------------------------------------------|
-| Haiku  | 11    | Fast, focused tasks (context management, SEO)            |
-| Sonnet | 46    | Standard development (languages, frontend, infrastructure)|
-| Opus   | 22    | Complex reasoning (architecture, security, analysis)     |
+Agents are optimized across Claude model tiers (Haiku/Sonnet/Opus) based on task complexity, covering:
 
-#### Key Agent Categories
+- **Architecture & Design**: System design, cloud infrastructure, API architecture
+- **Programming Languages**: Language-specific specialists for systems, web, enterprise, and mobile development
+- **Infrastructure & Operations**: DevOps, database management, networking
+- **Security & Quality**: Code review, security auditing, testing, performance engineering
+- **AI/ML & Data**: LLM applications, ML pipelines, data analysis
+- **Documentation & Business**: Technical writing, legal, HR, marketing
 
-**Architecture & Design**
-- `backend-architect`, `cloud-architect`, `kubernetes-architect`
-- `hybrid-cloud-architect`, `graphql-architect`, `terraform-specialist`
-
-**Programming Languages** (18 agents)
-- Systems: `c-pro`, `cpp-pro`, `rust-pro`, `golang-pro`
-- Web: `javascript-pro`, `typescript-pro`, `python-pro`, `ruby-pro`, `php-pro`
-- Enterprise: `java-pro`, `scala-pro`, `csharp-pro`
-- Mobile: `ios-developer`, `flutter-expert`, `mobile-developer`
-
-**Infrastructure & Operations**
-- `devops-troubleshooter`, `deployment-engineer`, `incident-responder`
-- `database-optimizer`, `database-admin`, `network-engineer`
-- `performance-engineer`, `observability-engineer`
-
-**Security & Quality**
-- `code-reviewer`, `security-auditor`, `tdd-orchestrator`
-- `backend-security-coder`, `frontend-security-coder`, `mobile-security-coder`
-- `test-automator`, `debugger`, `error-detective`
-
-**AI/ML & Data**
-- `ai-engineer`, `ml-engineer`, `mlops-engineer`, `prompt-engineer`
-- `data-scientist`, `data-engineer`
-
-**Documentation & Business**
-- `docs-architect`, `api-documenter`, `tutorial-engineer`, `mermaid-expert`
-- `business-analyst`, `content-marketer`, `legal-advisor`, `hr-pro`
+**📖 See [`agents/README.md`](agents/README.md) for:**
+- Complete agent catalog with capabilities
+- Model distribution and selection guides
+- Agent orchestration patterns
+- Usage examples and best practices
 
 ### 🔄 Multi-Agent Orchestration Patterns
 
