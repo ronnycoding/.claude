@@ -201,7 +201,7 @@ Clone to your Claude Code configuration directory:
 
 ```bash
 cd ~/.claude
-git clone git@github.com:ronnycoding/.claude.git .
+git clone --recurse-submodules git@github.com:ronnycoding/.claude.git .
 ```
 
 The configuration loads automatically when using Claude Code.
