@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "plugins": {
+    "example-skills@anthropic-agent-skills": {
+      "version": "unknown",
+      "installedAt": "2025-10-26T20:19:01.124Z",
+      "lastUpdated": "2025-10-26T20:19:01.124Z",
+      "installPath": "/Users/ronnycoding/.claude/plugins/marketplaces/anthropic-agent-skills/",
+      "gitCommitSha": "c74d647e56e6daa12029b6acb11a821348ad044b",
+      "isLocal": true
+    },
+    "chrome-devtools-mcp@chrome-devtools-plugins": {
+      "version": "latest",
+      "installedAt": "2025-10-30T19:06:55.237Z",
+      "lastUpdated": "2025-10-30T19:06:55.237Z",
+      "installPath": "/Users/ronnycoding/.claude/plugins/cache/chrome-devtools-mcp",
+      "gitCommitSha": "2f448e84ea8d3a44687c74b3577edf882ef2c19f",
+      "isLocal": false
+    }
+  }
+}

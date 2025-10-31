@@ -1,0 +1,18 @@
+{
+  "anthropic-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/skills"
+    },
+    "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/anthropic-agent-skills",
+    "lastUpdated": "2025-10-26T20:16:46.702Z"
+  },
+  "chrome-devtools-plugins": {
+    "source": {
+      "source": "github",
+      "repo": "ChromeDevTools/chrome-devtools-mcp"
+    },
+    "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/chrome-devtools-plugins",
+    "lastUpdated": "2025-10-30T19:06:42.741Z"
+  }
+}
