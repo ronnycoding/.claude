@@ -9,6 +9,7 @@ This is a personal Claude Code configuration directory containing command templa
 ## Key Architecture
 
 ### Command Templates (`commands/`)
+
 Sophisticated prompt templates for GitHub operations:
 
 - **`issue.md`**: Multi-phase issue creation workflow with sub-issue decomposition
@@ -29,9 +30,11 @@ Sophisticated prompt templates for GitHub operations:
   - Tree view and status dashboard output
 
 ### Specialized Agents (`agents/` - Git Submodule)
+
 Collection of specialized AI subagents from [wshobson/agents](https://github.com/wshobson/agents) repository.
 
 Provides domain-specific specialists optimized across Claude model tiers (Haiku/Sonnet/Opus) for:
+
 - Architecture & Design
 - Programming Languages
 - Infrastructure & Operations
@@ -40,13 +43,16 @@ Provides domain-specific specialists optimized across Claude model tiers (Haiku/
 - Documentation & Business
 
 See `agents/README.md` for:
+
 - Complete agent catalog and capabilities
 - Model distribution and selection criteria
 - Multi-agent orchestration patterns
 - Usage examples and best practices
 
 ### Templates (`templates/`)
+
 GitHub-specific templates:
+
 - `GH_PR_TEMPLATE.md`: Standard PR structure with checklists
 - `GH_SUB_ISSUE_TEMPLATE.md`: Sub-issue format with scope, dependencies, interfaces
 
@@ -68,7 +74,9 @@ GitHub-specific templates:
 ## GitHub Workflow Commands
 
 ### Issue Creation
+
 Uses `commands/issue.md` workflow:
+
 1. Reads template from `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
 2. Analyzes repository for conventions (CONTRIBUTING.md, existing issues)
 3. Decomposes complex features into sub-issues with dependencies
@@ -76,7 +84,9 @@ Uses `commands/issue.md` workflow:
 5. Generates parent epic with task breakdown table
 
 ### Pull Request Creation
+
 Uses `commands/pr.md` workflow:
+
 1. Reads template from `~/.claude/templates/GH_PR_TEMPLATE.md`
 2. Checks for existing PR templates (`.github/pull_request_template.md`)
 3. Analyzes 10-20 recent PRs for title format and conventions
@@ -84,7 +94,9 @@ Uses `commands/pr.md` workflow:
 5. Generates comprehensive PR with context and testing evidence
 
 ### Todo Management
+
 Uses `commands/todos.md` workflow:
+
 - Initialize: `claude todos --init --project="NAME" --repo="URL"`
 - Add issue: `claude todos --add --issue="123" --type="orchestration"`
 - Update: `claude todos --update --issue="123" --phase="integration" --progress="75"`
@@ -93,16 +105,19 @@ Uses `commands/todos.md` workflow:
 ## Agent Orchestration Patterns
 
 **Sequential Processing:**
+
 ```
 backend-architect → frontend-developer → test-automator → security-auditor
 ```
 
 **Parallel Execution:**
+
 ```
 performance-engineer + database-optimizer → Merged analysis
 ```
 
 **Validation Pipeline:**
+
 ```
 payment-integration → security-auditor → Validated implementation
 ```
@@ -117,7 +132,23 @@ payment-integration → security-auditor → Validated implementation
 ## Settings
 
 `settings.json` contains:
+
 - `alwaysThinkingEnabled: true` - Extended reasoning for complex tasks
+
+## Calendar Management
+
+**Personal Calendar:** `ronnyangelo.freites@gmail.com`
+
+When creating personal calendar events (appointments, personal tasks, non-work activities), always use the `ronnyangelo.freites@gmail.com` calendar instead of the default "Home" calendar.
+
+**AppleScript Example:**
+```applescript
+tell application "Calendar"
+    tell calendar "ronnyangelo.freites@gmail.com"
+        make new event with properties {summary:"Event Name", start date:startDate, end date:endDate}
+    end tell
+end tell
+```
 
 ## Usage Notes
 

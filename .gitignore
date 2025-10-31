@@ -8,3 +8,8 @@
 !templates/**
 !README.md
 !CLAUDE.md
+!skills/
+!skills/**
+!plugins/
+!plugins/**
+!settings.json
