@@ -83,10 +83,15 @@ Uses `commands/issue.md` workflow:
    - Parent issue: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
    - Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
 2. Analyzes repository for conventions (CONTRIBUTING.md, existing issues)
-3. Decomposes complex features into sub-issues with dependencies
-4. Estimates complexity using Fibonacci story points (1, 2, 3, 5, 8, 13, 21)
-5. Creates dependency graphs and agent/team assignments
-6. Generates parent epic with task breakdown table and integration points
+3. **Identifies Claude Code skills and tooling**:
+   - Reviews available skills in `~/.claude/skills/` for domain expertise
+   - Determines if existing skills apply (standalone or with agents)
+   - Recommends new custom skill creation for highly technical/domain-specific tasks
+   - Maps skills to sub-issues for high-quality specialized output
+4. Decomposes complex features into sub-issues with dependencies
+5. Estimates complexity using Fibonacci story points (1, 2, 3, 5, 8, 13, 21)
+6. Creates dependency graphs and agent/team assignments
+7. Generates parent epic with task breakdown table and integration points
 
 **Progress Tracking:**
 - Status updates are made by editing the parent issue description
