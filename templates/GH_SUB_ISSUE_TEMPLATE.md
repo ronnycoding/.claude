@@ -8,6 +8,11 @@ Part of #[parent_issue_number] - [Parent Issue Title]
 **Specialization**: [e.g., backend-architect, frontend-developer, database-optimizer]
 **Story Points**: [Fibonacci: 1, 2, 3, 5, 8, 13, 21]
 
+## 🛠️ Skills & Tooling
+**Claude Code Skills**: [List applicable skills from `~/.claude/skills/` or "standalone" if agent-only]
+**Custom Skill Needed**: [Yes/No - If yes, describe domain-specific skill requirements]
+**Skill Usage**: [Standalone, With Agent, or Both]
+
 ## 📋 Summary
 Specific description of this sub-task.
 

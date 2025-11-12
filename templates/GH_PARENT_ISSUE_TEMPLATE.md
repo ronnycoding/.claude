@@ -27,13 +27,21 @@ High-level description of the proposed feature or fix.
 **Total Story Points**: 23
 
 ### Agent Assignments & Specializations
-| Agent              | Specialization          | Assigned Tasks | Total Points |
-| ------------------ | ----------------------- | -------------- | ------------ |
-| @cloud-architect   | Infrastructure & DevOps | #001           | 5            |
-| @backend-architect | API & Backend Systems   | #002           | 8            |
-| @frontend-developer| UI/UX & Client-side     | #003           | 5            |
-| @test-automator    | Quality & Testing       | #004           | 3            |
-| @api-documenter    | Documentation           | #005           | 2            |
+| Agent              | Specialization          | Assigned Tasks | Total Points | Skills/Tooling |
+| ------------------ | ----------------------- | -------------- | ------------ | -------------- |
+| @cloud-architect   | Infrastructure & DevOps | #001           | 5            | -              |
+| @backend-architect | API & Backend Systems   | #002           | 8            | -              |
+| @frontend-developer| UI/UX & Client-side     | #003           | 5            | -              |
+| @test-automator    | Quality & Testing       | #004           | 3            | -              |
+| @api-documenter    | Documentation           | #005           | 2            | -              |
+
+### Claude Code Skills & Tooling
+**Existing Skills to Use:**
+- _List applicable skills from `~/.claude/skills/` with their use cases_
+
+**Recommended New Skills:**
+- _Identify domain-specific tasks requiring custom skill creation_
+- _Example: "Financial risk calculation skill for complex derivatives pricing"_
 
 ### Dependency Graph
 ```mermaid
