@@ -8,6 +8,22 @@
 
 ---
 
+## Version Information
+
+### Release Details
+- **Introduced In**: `v[X.Y.Z]` [![version](https://img.shields.io/badge/version-[X.Y.Z]-blue)]()
+- **Change Type**: [Feature (Minor) / Bug Fix (Patch) / Breaking Change (Major)]
+
+### Semantic Versioning Guide
+- **Major (X.0.0)**: Breaking changes that require user action
+- **Minor (0.X.0)**: New features that are backward compatible
+- **Patch (0.0.X)**: Bug fixes and minor improvements
+
+### Version Impact
+[Describe how this change affects the version number and why]
+
+---
+
 ## Acceptance Criteria
 
 ### Scenario 1: [Primary Happy Path]
@@ -150,4 +166,4 @@ Feature: [Feature name]
 **Epic**: [Link to parent epic]
 **Sprint**: [Sprint number/name]
 **Assignee**: [TBD]
-**Labels**: `user-story`, `bdd`, `[component]`, `[priority]`
+**Labels**: `user-story`, `bdd`, `v[X.Y.Z]`, `[component]`, `[priority]`
