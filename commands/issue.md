@@ -2,39 +2,25 @@
 
 You are an AI assistant tasked with creating well-structured GitHub issues for feature requests, bug reports, or improvement ideas, with the capability to decompose complex issues into manageable sub-issues that can be assigned to different team members or agents.
 
-First, you will be given a feature description and a repository URL. Here they are:
-
 <feature_description>
-
-# $ARGUMENTS
-
+$ARGUMENTS
 </feature_description>
-
-<repository_url>
-
-# $REPO_URL
-
-</repository_url>
-
-<team_members>
-
-# $TEAM_MEMBERS (optional: comma-separated list of GitHub usernames)
-
-</team_members>
-
-<sub_issue_template_path>
-
-# ~/.claude/templates/SUB_ISSUE_TEMPLATE.md
-
-</sub_issue_template_path>
 
 ## Instructions
 
-1. First, read the sub-issue template from the specified path:
-   - Load the template from: ~/.claude/templates/SUB_ISSUE_TEMPLATE.md
-   - Use this template structure for ALL sub-issues you create
+1. First, read the required templates:
+   - Parent issue: ~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md
+   - Sub-issues: ~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md
+   - Use these template structures for creating the parent issue and all sub-issues
 
-2. Analyze the feature and create sub-issues using the loaded template
+2. Analyze the current repository context (you are already in the project directory)
+
+3. Decompose the feature and create issues using the loaded templates
+
+4. Use story points for estimation:
+   - Apply Fibonacci sequence: 1, 2, 3, 5, 8, 13, 21
+   - Never use time-based estimates (hours/days)
+   - Story points represent complexity and effort relative to other tasks
 
 ## TODO List
 
@@ -42,16 +28,16 @@ Follow these steps to complete the task systematically:
 
 ### Phase 1: Repository Research
 
-- [ ] Visit the provided repository URL and examine the project structure
-- [ ] Review existing issues to understand the project's issue patterns and conventions
+- [ ] Examine the current project structure and codebase
+- [ ] Use `gh` CLI to review existing issues and understand patterns/conventions
 - [ ] Look for CONTRIBUTING.md, ISSUE_TEMPLATE.md, or .github/ISSUE_TEMPLATE/ files
 - [ ] Identify the project's coding style and naming conventions
 - [ ] Note any specific requirements for submitting issues
 - [ ] Review the README.md for project context and contribution guidelines
-- [ ] Check for labels, milestones, and project boards to understand workflow
+- [ ] Use `gh` to check labels, milestones, and project boards
 - [ ] Analyze how the project handles issue dependencies and sub-tasks
 - [ ] Check if the project uses GitHub Projects or similar task tracking tools
-- [ ] Identify team members and their areas of expertise (from contributors list)
+- [ ] Use `gh api` to identify contributors and their areas of expertise
 
 ### Phase 2: Best Practices Research
 
@@ -73,7 +59,7 @@ Follow these steps to complete the task systematically:
 - [ ] Analyze if the issue should be broken down into sub-issues
 - [ ] Identify logical components or modules that can be worked on independently
 - [ ] Determine dependencies between potential sub-issues
-- [ ] Estimate complexity and effort for each sub-task
+- [ ] Estimate story points for each sub-task using Fibonacci sequence (1, 2, 3, 5, 8, 13, 21)
 - [ ] Map sub-issues to appropriate team members/agents based on expertise
 
 ### Phase 4: Parent Issue Structure Creation
@@ -83,7 +69,8 @@ Follow these steps to complete the task systematically:
 - [ ] **Summary**: Brief overview of the request/issue
 - [ ] **Problem Statement**: What problem does this solve?
 - [ ] **Proposed Solution**: Detailed description of the requested feature/fix
-- [ ] **Task Breakdown**: List of sub-issues with dependencies
+- [ ] **Task Breakdown**: Sub-issues table with "Completed" column for tracking progress
+- [ ] **Status Update Instructions**: Include clear note to update completion status in issue description, NOT in comments
 - [ ] **Acceptance Criteria**: Clear, testable conditions for completion
 - [ ] **Additional Context**: Screenshots, examples, or related issues
 - [ ] **Implementation Notes**: Technical considerations (if applicable)
@@ -93,12 +80,14 @@ Follow these steps to complete the task systematically:
 ### Phase 5: Sub-Issue Creation
 
 - [ ] For each identified sub-task, create a detailed sub-issue structure
+- [ ] Assign appropriate specialized agents/team members with their expertise area
+- [ ] Include story points for each sub-issue using Fibonacci sequence
 - [ ] Establish clear scope boundaries for each sub-issue
 - [ ] Define interfaces and handoff points between sub-issues
-- [ ] Assign appropriate team members/agents to each sub-issue
 - [ ] Set up dependency chains and blocking relationships
 - [ ] Create a timeline/roadmap for sub-issue completion
 - [ ] Define integration testing requirements between components
+- [ ] Document handoff checklists for agent-to-agent transitions
 
 ### Phase 6: Quality Assurance
 
@@ -112,38 +101,8 @@ Follow these steps to complete the task systematically:
 - [ ] Verify team member assignments match their expertise
 - [ ] Check that integration points are well-defined
 
-## Enhanced Issue Template Structure
+## Output
 
-### Parent Issue Template
-
-```markdown
-# [EPIC/FEATURE] Main Feature Title
-
-## 📋 Summary
-Brief description of what this epic/feature addresses.
-
-## 🎯 Problem Statement
-What problem are we trying to solve? Why is this important?
-
-## 💡 Proposed Solution
-High-level description of the proposed feature or fix.
-
-## 🔧 Task Breakdown & Assignments
-
-### Sub-Issues Overview
-| Issue | Title                              | Assignee | Priority | Dependencies | Status |
-| ----- | ---------------------------------- | -------- | -------- | ------------ | ------ |
-| #001  | [Component A] Setup Infrastructure | @agent1  | High     | None         | [ ]    |
-| #002  | [Component B] API Implementation   | @agent2  | High     | #001         | [ ]    |
-| #003  | [Component C] Frontend Integration | @agent3  | Medium   | #002         | [ ]    |
-| #004  | [Testing] Unit Tests               | @agent4  | Medium   | #002, #003   | [ ]    |
-| #005  | [Docs] API Documentation           | @agent5  | Low      | #002         | [ ]    |
-
-### Dependency Graph
-```mermaid
-graph TD
-    A[#001 Infrastructure] --> B[#002 API]
-    B --> C[#003 Frontend]
-    B --> D[#004 Tests]
-    B --> E[#005 Docs]
-    C --> D
+Create the parent issue and all sub-issues following the loaded templates from:
+- `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
+- `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
