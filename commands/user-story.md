@@ -34,6 +34,43 @@ I want [goal]
 So that [benefit]
 ```
 
+## Phase 2.5: Collect Version Information
+
+Use the AskUserQuestion tool to gather semantic versioning details:
+
+**Questions to ask:**
+1. What version will this be introduced in? (Format: X.Y.Z or vX.Y.Z)
+2. What type of change is this?
+   - **Feature**: New functionality (minor version bump: 1.0.0 → 1.1.0)
+   - **Bug Fix**: Fixes existing functionality (patch version bump: 1.0.0 → 1.0.1)
+   - **Breaking Change**: Requires user action (major version bump: 1.0.0 → 2.0.0)
+
+**Semantic Version Validation:**
+- Validate the version follows semver format: `MAJOR.MINOR.PATCH`
+- Each component must be a non-negative integer
+- No leading zeros (except 0 itself)
+- Optional 'v' prefix is acceptable (e.g., v1.2.0 or 1.2.0)
+
+**Validation Rules:**
+```
+Valid:   1.0.0, v2.3.4, 0.1.0, 10.20.30
+Invalid: 1.2, 01.2.3, 1.2.3.4, abc, 1.2.x
+```
+
+**If validation fails:**
+- Show the invalid format with clear error message
+- Explain the semver format requirements
+- Ask the user to provide a valid version number
+- Suggest the appropriate version bump based on change type
+
+**Version Impact Analysis:**
+- For **Breaking Changes**: Explain what makes this breaking and why it requires a major version bump
+- For **Features**: Describe the new capability being added
+- For **Bug Fixes**: Explain what issue is being resolved
+
+**Add to labels:**
+Include the version label in format: `v[X.Y.Z]` (e.g., `v2.1.0`)
+
 ## Phase 3: Define Gherkin Scenarios
 
 Use the AskUserQuestion tool to create detailed Gherkin scenarios. You need at least 3 scenarios:
@@ -127,14 +164,29 @@ Use the AskUserQuestion tool to ask:
 
 ## Phase 9: Generate and Create Issue
 
-1. Fill in the template with all gathered information
-2. Create a complete, formatted user story document
-3. Create the GitHub issue:
-   ```bash
-   gh issue create --repo [REPO] --title "[User Story Title]" --body-file [temp-file-with-content] --label "user-story,bdd,[other-labels]"
+1. **Validate Version One Final Time**: Before creating the issue, validate the version number:
+   ```
+   Pattern: ^v?([0-9]+)\.([0-9]+)\.([0-9]+)$
+   - Strip optional 'v' prefix
+   - Ensure each component is numeric
+   - Ensure no leading zeros (except 0 itself)
    ```
 
-4. Add the created issue to the GitHub Project:
+2. **Fill in the template** with all gathered information:
+   - Replace `[X.Y.Z]` with the validated version number
+   - Replace `[Feature (Minor) / Bug Fix (Patch) / Breaking Change (Major)]` with the change type
+   - Fill in the version impact explanation
+   - Ensure version badge shows correct version
+   - Add version label to the labels list
+
+3. **Create a complete, formatted user story document**
+
+4. **Create the GitHub issue**:
+   ```bash
+   gh issue create --repo [REPO] --title "[User Story Title]" --body-file [temp-file-with-content] --label "user-story,bdd,v[X.Y.Z],[other-labels]"
+   ```
+
+5. **Add the created issue to the GitHub Project**:
    ```bash
    # Get the issue number from creation output
    gh project item-add [PROJECT_NUMBER] --owner [OWNER] --url [ISSUE_URL]
@@ -144,18 +196,22 @@ Use the AskUserQuestion tool to ask:
 
 Display to the user:
 - Link to the created issue
+- Version information (version number and change type)
 - Confirmation that it was added to the project
 - Summary of the user story with key scenarios
+- Version badge for easy reference
 
 ## Important Notes:
 
 - **Ask questions progressively** - don't overwhelm with all questions at once
+- **Enforce semver validation** - strictly validate version format (X.Y.Z) before proceeding
 - **Validate Gherkin syntax** - ensure Given/When/Then structure is correct
 - **Be specific** - avoid vague placeholders; gather concrete details
 - **Consider testability** - scenarios should be clear enough to write automated tests
 - **Think edge cases** - push for error scenarios and boundary conditions
-- **Use proper labels** - always include `user-story` and `bdd` labels
+- **Use proper labels** - always include `user-story`, `bdd`, and `v[X.Y.Z]` labels
 - **Verify project access** - confirm the user has access to the specified GitHub Project
+- **Version consistency** - ensure version appears in template body, badge, and labels
 
 ## GitHub CLI Commands Reference:
 
