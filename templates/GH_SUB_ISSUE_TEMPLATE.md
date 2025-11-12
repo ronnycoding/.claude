@@ -1,10 +1,12 @@
-### Sub-Issue Template
-
-```markdown
 # [SUB-ISSUE] Component/Module Name
 
 ## 🔗 Parent Issue
 Part of #[parent_issue_number] - [Parent Issue Title]
+
+## 👤 Assignment
+**Assigned Agent/Team Member**: @agent_name
+**Specialization**: [e.g., backend-architect, frontend-developer, database-optimizer]
+**Story Points**: [Fibonacci: 1, 2, 3, 5, 8, 13, 21]
 
 ## 📋 Summary
 Specific description of this sub-task.
@@ -36,3 +38,54 @@ inputs:
 outputs:
   - result1: type, description
   - result2: type, description
+```
+
+### Integration Points
+- **Receives from**: [Component/Issue] - [Data/Interface description]
+- **Provides to**: [Component/Issue] - [Data/Interface description]
+
+## ✅ Acceptance Criteria
+- [ ] Core functionality implemented
+- [ ] Unit tests written and passing
+- [ ] Integration tests with dependent components
+- [ ] Code review completed
+- [ ] Documentation updated
+- [ ] Interface contract validated
+
+## 🧪 Testing Strategy
+### Unit Tests
+- Test cases for core functionality
+- Edge cases and error handling
+
+### Integration Tests
+- Interface compatibility with upstream components
+- Data flow validation with downstream components
+
+## 📎 Additional Context
+### Related Issues
+- Depends on: #[issue_number]
+- Related to: #[issue_number]
+
+### References
+- [Design doc](link)
+- [API spec](link)
+- [Architecture diagram](link)
+
+### Technical Notes
+_Add any implementation-specific notes, gotchas, or considerations_
+
+## 🏷️ Labels
+`sub-issue`, `[component-name]`, `[priority]`, `story-points:[X]`
+
+## 📅 Timeline
+- **Start**: [Date]
+- **Target Completion**: [Date]
+- **Estimated**: [X story points]
+
+## 🤝 Handoff Checklist
+- [ ] Interface contract documented
+- [ ] API endpoints/methods documented
+- [ ] Data models/schemas defined
+- [ ] Error handling patterns established
+- [ ] Integration points validated
+- [ ] Handoff notes for dependent teams/agents

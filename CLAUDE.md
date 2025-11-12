@@ -54,7 +54,9 @@ See `agents/README.md` for:
 GitHub-specific templates:
 
 - `GH_PR_TEMPLATE.md`: Standard PR structure with checklists
+- `GH_PARENT_ISSUE_TEMPLATE.md`: Parent issue/epic format with task breakdown and story points
 - `GH_SUB_ISSUE_TEMPLATE.md`: Sub-issue format with scope, dependencies, interfaces
+- `GH_USER_STORY_TEMPLATE.md`: BDD user story with Gherkin syntax
 
 ## Directory Structure
 
@@ -77,11 +79,19 @@ GitHub-specific templates:
 
 Uses `commands/issue.md` workflow:
 
-1. Reads template from `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+1. Reads templates:
+   - Parent issue: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
+   - Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
 2. Analyzes repository for conventions (CONTRIBUTING.md, existing issues)
 3. Decomposes complex features into sub-issues with dependencies
-4. Creates dependency graphs and team assignments
-5. Generates parent epic with task breakdown table
+4. Estimates complexity using Fibonacci story points (1, 2, 3, 5, 8, 13, 21)
+5. Creates dependency graphs and agent/team assignments
+6. Generates parent epic with task breakdown table and integration points
+
+**Progress Tracking:**
+- Status updates are made by editing the parent issue description
+- Check boxes in the "Completed" column track sub-issue progress
+- Single source of truth - DO NOT use comments for status updates
 
 ### Pull Request Creation
 
@@ -157,5 +167,7 @@ end tell
 3. **Agent selection** happens automatically based on task, or invoke explicitly
 4. **Todo tracking** uses orchestration mode for multi-agent coordination
 5. **Templates paths** are fixed:
+   - Parent issues: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
    - Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
    - Pull requests: `~/.claude/templates/GH_PR_TEMPLATE.md`
+   - User stories: `~/.claude/templates/GH_USER_STORY_TEMPLATE.md`
