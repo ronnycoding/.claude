@@ -5,7 +5,7 @@
       "repo": "anthropics/skills"
     },
     "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/anthropic-agent-skills",
-    "lastUpdated": "2025-10-26T20:16:46.702Z"
+    "lastUpdated": "2025-11-20T20:27:22.194Z"
   },
   "chrome-devtools-plugins": {
     "source": {
@@ -13,6 +13,14 @@
       "repo": "ChromeDevTools/chrome-devtools-mcp"
     },
     "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/chrome-devtools-plugins",
-    "lastUpdated": "2025-10-30T19:06:42.741Z"
+    "lastUpdated": "2025-11-20T20:27:23.672Z"
+  },
+  "neon": {
+    "source": {
+      "source": "github",
+      "repo": "neondatabase-labs/ai-rules"
+    },
+    "installLocation": "/Users/ronny.freites/.claude/plugins/marketplaces/neon",
+    "lastUpdated": "2025-11-13T20:31:39.436Z"
   }
 }
