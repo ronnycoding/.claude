@@ -4,6 +4,23 @@ description: Create BDD user stories with Gherkin syntax and add to GitHub Proje
 
 You are creating a comprehensive BDD (Behavior-Driven Development) user story using Gherkin syntax. Follow this multi-phase workflow to gather all necessary information and create a complete user story issue in GitHub.
 
+## Phase 0: Initial Setup
+
+**FIRST:** Use the AskUserQuestion tool to ask the user:
+
+**Question:** "How would you like to create the user story?"
+
+**Options:**
+1. **GitHub Issue** - Create as a GitHub issue and optionally add to GitHub Projects
+2. **Markdown File** - Save as .md file in the `user-stories/` folder
+
+**Folder Structure for Markdown Files:**
+- User stories: `user-stories/[version]-[title-slug].md` or `user-stories/story-[number]-[title-slug].md`
+- Create the `user-stories/` folder if it doesn't exist
+- Use kebab-case for file names
+- Prefix with version number (e.g., `v2.1.0-user-authentication.md`) or story number
+- Include front matter with metadata
+
 ## Phase 1: Load Template and Understand Context
 
 First, read the user story template:
@@ -153,18 +170,25 @@ Use the AskUserQuestion tool to gather:
 4. **Labels**: Component, priority, and other relevant labels
 5. **Related Stories**: Links to related or dependent stories
 
-## Phase 8: GitHub Project Integration
+## Phase 8: Repository and Project Integration
 
+Based on the user's choice from Phase 0:
+
+### For GitHub Issues:
 Use the AskUserQuestion tool to ask:
 
 1. **Repository**: Which repository should this issue be created in?
-2. **GitHub Project**: Provide the project number or URL
+2. **GitHub Project** (Optional): Provide the project number or URL
    - Format: `owner/project/NUMBER` or full project URL
    - Use `gh project list --owner [owner]` to see available projects if needed
+   - Skip if not adding to a project
 
-## Phase 9: Generate and Create Issue
+### For Markdown Files:
+No additional questions needed. Files will be saved to `user-stories/` folder.
 
-1. **Validate Version One Final Time**: Before creating the issue, validate the version number:
+## Phase 9: Generate and Create User Story
+
+1. **Validate Version One Final Time**: Before creating the user story, validate the version number:
    ```
    Pattern: ^v?([0-9]+)\.([0-9]+)\.([0-9]+)$
    - Strip optional 'v' prefix
@@ -181,25 +205,59 @@ Use the AskUserQuestion tool to ask:
 
 3. **Create a complete, formatted user story document**
 
+### Option A: Create GitHub Issue
+
 4. **Create the GitHub issue**:
    ```bash
    gh issue create --repo [REPO] --title "[User Story Title]" --body-file [temp-file-with-content] --label "user-story,bdd,v[X.Y.Z],[other-labels]"
    ```
 
-5. **Add the created issue to the GitHub Project**:
+5. **Add the created issue to the GitHub Project** (if project was specified):
    ```bash
    # Get the issue number from creation output
    gh project item-add [PROJECT_NUMBER] --owner [OWNER] --url [ISSUE_URL]
    ```
 
+### Option B: Create Markdown File
+
+4. **Create the `user-stories/` folder** if it doesn't exist:
+   ```bash
+   mkdir -p user-stories
+   ```
+
+5. **Save the user story** to a markdown file:
+   - Filename: `user-stories/v[X.Y.Z]-[title-slug].md`
+   - Include YAML front matter with metadata:
+     ```yaml
+     ---
+     title: "[User Story Title]"
+     version: "X.Y.Z"
+     change_type: "Feature|Bug Fix|Breaking Change"
+     labels: ["user-story", "bdd", "vX.Y.Z"]
+     priority: "High|Medium|Low"
+     story_points: [number]
+     status: "draft|ready|in-progress|completed"
+     ---
+     ```
+   - Follow with the complete user story content
+
 ## Phase 10: Confirmation
 
-Display to the user:
+Display to the user based on output option:
+
+### For GitHub Issues:
 - Link to the created issue
 - Version information (version number and change type)
-- Confirmation that it was added to the project
+- Confirmation that it was added to the project (if applicable)
 - Summary of the user story with key scenarios
 - Version badge for easy reference
+
+### For Markdown Files:
+- Path to the created file (e.g., `user-stories/v2.1.0-user-authentication.md`)
+- Version information (version number and change type)
+- Summary of the user story with key scenarios
+- File structure and location confirmation
+- Reminder that the file can be committed to version control
 
 ## Important Notes:
 

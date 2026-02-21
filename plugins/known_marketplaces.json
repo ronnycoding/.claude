@@ -21,6 +21,14 @@
       "repo": "neondatabase-labs/ai-rules"
     },
     "installLocation": "/Users/ronny.freites/.claude/plugins/marketplaces/neon",
-    "lastUpdated": "2025-11-13T20:31:39.436Z"
+    "lastUpdated": "2026-02-21T05:14:30.649Z"
+  },
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-02-18T04:23:47.110Z"
   }
 }

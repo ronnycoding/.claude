@@ -6,6 +6,23 @@ You are an AI assistant tasked with creating well-structured GitHub issues for f
 $ARGUMENTS
 </feature_description>
 
+## Initial Setup
+
+**FIRST:** Use the AskUserQuestion tool to ask the user:
+
+**Question:** "How would you like to create the issues?"
+
+**Options:**
+1. **GitHub Issues** - Create issues directly in GitHub using `gh` CLI
+2. **Markdown Files** - Save as .md files in the `issues/` folder
+
+**Folder Structure for Markdown Files:**
+- Parent issue: `issues/[issue-number]-[title-slug].md` or `issues/parent-[title-slug].md`
+- Sub-issues: `issues/sub-[parent-number]-[sub-number]-[title-slug].md`
+- Create the `issues/` folder if it doesn't exist
+- Use kebab-case for file names
+- Include issue number prefix when available
+
 ## Instructions
 
 1. First, read the required templates:
@@ -122,6 +139,32 @@ Follow these steps to complete the task systematically:
 
 ## Output
 
-Create the parent issue and all sub-issues following the loaded templates from:
-- `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
-- `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+Based on the user's choice:
+
+### Option 1: GitHub Issues
+Create the parent issue and all sub-issues directly in GitHub using `gh` CLI:
+- Use `gh issue create` with appropriate labels and assignees
+- Link sub-issues to parent issue in descriptions
+- Follow templates from:
+  - `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
+  - `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+
+### Option 2: Markdown Files
+Save issues as markdown files in the `issues/` folder:
+- Create `issues/` folder if it doesn't exist
+- Parent issue: `issues/parent-[title-slug].md` or `issues/[number]-[title-slug].md`
+- Sub-issues: `issues/sub-[parent-number]-[sub-number]-[title-slug].md`
+- Follow templates from:
+  - `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
+  - `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+- Include front matter with metadata (title, labels, assignees, story points)
+- Example front matter:
+  ```yaml
+  ---
+  title: "Feature: User Authentication"
+  labels: ["feature", "authentication", "backend"]
+  story_points: 13
+  assignee: "backend-architect"
+  dependencies: []
+  ---
+  ```

@@ -3,5 +3,9 @@
     "example-skills@anthropic-agent-skills": true,
     "chrome-devtools-mcp@chrome-devtools-plugins": true
   },
-  "alwaysThinkingEnabled": false
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "medium",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
 }
