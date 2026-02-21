@@ -4,159 +4,76 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a personal Claude Code configuration directory containing command templates, specialized AI agents, and GitHub workflow automation tools.
+Personal Claude Code configuration directory with 83+ specialized AI agents, 13 custom skills, 13 slash commands, and three development methodologies.
+
+## Development Methodologies
+
+Three progressive approaches — always reference `README.md` for full workflow diagrams:
+
+1. **Individual: Issue-Driven** — `/issue` -> `/task` -> `/pr`
+2. **Behavioral: BDD** — `/user-story` -> `/issue` -> `/task` -> `/pr`
+3. **Scaled: Epic-Driven (Agent Teams)** — `/work-on-opens` (wraps `/task` + `/pr`, uses `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` and git worktrees)
+
+**Supporting planning commands:** `/architecture` and `/mvp-requirements` feed into any methodology.
 
 ## Key Architecture
 
-### Command Templates (`commands/`)
+### Commands (`commands/`)
 
-Sophisticated prompt templates for GitHub operations:
+13 slash command templates for GitHub workflows, planning, research, and content generation. See `commands/README.md` for full documentation.
 
-- **`issue.md`**: Multi-phase issue creation workflow with sub-issue decomposition
-  - Analyzes repository conventions and existing templates
-  - Breaks complex features into assignable sub-tasks
-  - Creates dependency graphs and integration points
-  - Template path: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+**Key behaviors:**
+- `/issue` reads templates from `~/.claude/templates/GH_*_TEMPLATE.md`, analyzes repo conventions, maps skills to sub-issues, estimates with Fibonacci story points
+- `/pr` detects existing PR templates, analyzes recent PRs for conventions
+- `/work-on-opens` processes priority boards with tier-based parallel execution
 
-- **`pr.md`**: Comprehensive pull request creation workflow
-  - Detects and uses existing PR templates (`.github/pull_request_template.md`)
-  - Analyzes recent PRs for conventions (title format, labels, merge strategy)
-  - Performs change classification and risk assessment
-  - Template path: `~/.claude/templates/GH_PR_TEMPLATE.md`
+**Progress Tracking:** Status updates are made by editing the parent issue description. Check boxes in the "Completed" column track progress. Single source of truth — DO NOT use comments for status updates.
 
-- **`todos.md`**: Advanced todo tracking with agent orchestration
-  - Supports orchestrated multi-agent workflows
-  - Phase-based progress tracking (analysis, implementation, integration)
-  - Tree view and status dashboard output
+### Skills (`skills/`)
 
-### Specialized Agents (`agents/` - Git Submodule)
+13 specialized skills in two categories. See `skills/README.md` for full catalog.
 
-Collection of specialized AI subagents from [wshobson/agents](https://github.com/wshobson/agents) repository.
+- **Claude Code Customization** (6): create-skill, create-subagent, create-command, create-hooks, create-claude-plugin, connect-mcp-server
+- **Domain Expertise** (7): webgl-expert, nightingale-expert, argus-deployment, notebooklm, secure-web-search, analyzing-financial-statements, creating-financial-models
 
-Provides domain-specific specialists optimized across Claude model tiers (Haiku/Sonnet/Opus) for:
+### Agents (`agents/` - Git Submodule)
 
-- Architecture & Design
-- Programming Languages
-- Infrastructure & Operations
-- Security & Quality
-- AI/ML & Data
-- Documentation & Business
-
-See `agents/README.md` for:
-
-- Complete agent catalog and capabilities
-- Model distribution and selection criteria
-- Multi-agent orchestration patterns
-- Usage examples and best practices
+83+ specialized AI subagents from [wshobson/agents](https://github.com/wshobson/agents), optimized across Haiku/Sonnet/Opus tiers. See `agents/README.md` for catalog and orchestration patterns.
 
 ### Templates (`templates/`)
 
-GitHub-specific templates:
-
-- `GH_PR_TEMPLATE.md`: Standard PR structure with checklists
-- `GH_PARENT_ISSUE_TEMPLATE.md`: Parent issue/epic format with task breakdown and story points
-- `GH_SUB_ISSUE_TEMPLATE.md`: Sub-issue format with scope, dependencies, interfaces
-- `GH_USER_STORY_TEMPLATE.md`: BDD user story with Gherkin syntax
+Fixed paths — always load before workflow execution:
+- Parent issues: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
+- Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
+- Pull requests: `~/.claude/templates/GH_PR_TEMPLATE.md`
+- User stories: `~/.claude/templates/GH_USER_STORY_TEMPLATE.md`
 
 ## Directory Structure
 
 ```
 .claude/
-├── commands/           # GitHub operation prompt templates
-├── agents/            # Specialized AI subagent definitions
-├── templates/         # GitHub PR and issue templates
-├── projects/          # Session history (.jsonl) by project path
+├── commands/           # Slash command templates (13)
+├── skills/            # Custom skills (13)
+├── agents/            # AI subagents (83+, git submodule)
+├── templates/         # GitHub PR/issue templates
+├── projects/          # Session history (.jsonl)
 ├── shell-snapshots/   # Shell session persistence
-├── todos/            # Individual task tracking (.json)
-├── statsig/          # Analytics cache
+├── todos/            # Task tracking (.json)
 ├── plugins/          # Claude Code plugins
+├── statsig/          # Analytics cache
 └── ide/              # IDE integration
 ```
 
-## GitHub Workflow Commands
-
-### Issue Creation
-
-Uses `commands/issue.md` workflow:
-
-1. Reads templates:
-   - Parent issue: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
-   - Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
-2. Analyzes repository for conventions (CONTRIBUTING.md, existing issues)
-3. **Identifies Claude Code skills and tooling**:
-   - Reviews available skills in `~/.claude/skills/` for domain expertise
-   - Determines if existing skills apply (standalone or with agents)
-   - Recommends new custom skill creation for highly technical/domain-specific tasks
-   - Maps skills to sub-issues for high-quality specialized output
-4. Decomposes complex features into sub-issues with dependencies
-5. Estimates complexity using Fibonacci story points (1, 2, 3, 5, 8, 13, 21)
-6. Creates dependency graphs and agent/team assignments
-7. Generates parent epic with task breakdown table and integration points
-
-**Progress Tracking:**
-- Status updates are made by editing the parent issue description
-- Check boxes in the "Completed" column track sub-issue progress
-- Single source of truth - DO NOT use comments for status updates
-
-### Pull Request Creation
-
-Uses `commands/pr.md` workflow:
-
-1. Reads template from `~/.claude/templates/GH_PR_TEMPLATE.md`
-2. Checks for existing PR templates (`.github/pull_request_template.md`)
-3. Analyzes 10-20 recent PRs for title format and conventions
-4. Classifies change type (feature/bugfix/refactor/etc.) and impact level
-5. Generates comprehensive PR with context and testing evidence
-
-### Todo Management
-
-Uses `commands/todos.md` workflow:
-
-- Initialize: `claude todos --init --project="NAME" --repo="URL"`
-- Add issue: `claude todos --add --issue="123" --type="orchestration"`
-- Update: `claude todos --update --issue="123" --phase="integration" --progress="75"`
-- Status: `claude todos --status [--tree]`
-
-## Agent Orchestration Patterns
-
-**Sequential Processing:**
-
-```
-backend-architect → frontend-developer → test-automator → security-auditor
-```
-
-**Parallel Execution:**
-
-```
-performance-engineer + database-optimizer → Merged analysis
-```
-
-**Validation Pipeline:**
-
-```
-payment-integration → security-auditor → Validated implementation
-```
-
-## Session Management
-
-- **Project sessions**: Tracked in `projects/` as `.jsonl` files
-- **Shell persistence**: Snapshots in `shell-snapshots/` for command history
-- **Todo state**: Individual JSON files in `todos/` for cross-session tracking
-- **Privacy**: Personal data gitignored, only shared templates versioned
-
 ## Settings
 
-`settings.json` contains:
-
-- `alwaysThinkingEnabled: true` - Extended reasoning for complex tasks
+- `alwaysThinkingEnabled: true` — Extended reasoning for complex tasks
 
 ## Calendar Management
 
 **Personal Calendar:** `ronnyangelo.freites@gmail.com`
 
-When creating personal calendar events (appointments, personal tasks, non-work activities), always use the `ronnyangelo.freites@gmail.com` calendar instead of the default "Home" calendar.
+When creating personal calendar events, always use the `ronnyangelo.freites@gmail.com` calendar instead of the default "Home" calendar.
 
-**AppleScript Example:**
 ```applescript
 tell application "Calendar"
     tell calendar "ronnyangelo.freites@gmail.com"
@@ -167,12 +84,8 @@ end tell
 
 ## Usage Notes
 
-1. **Command templates** reference specific file paths - always load templates first
-2. **Repository analysis** is critical - check CONTRIBUTING.md, existing issues/PRs
+1. **Command templates** reference specific file paths — always load templates first
+2. **Repository analysis** is critical — check CONTRIBUTING.md, existing issues/PRs
 3. **Agent selection** happens automatically based on task, or invoke explicitly
-4. **Todo tracking** uses orchestration mode for multi-agent coordination
-5. **Templates paths** are fixed:
-   - Parent issues: `~/.claude/templates/GH_PARENT_ISSUE_TEMPLATE.md`
-   - Sub-issues: `~/.claude/templates/GH_SUB_ISSUE_TEMPLATE.md`
-   - Pull requests: `~/.claude/templates/GH_PR_TEMPLATE.md`
-   - User stories: `~/.claude/templates/GH_USER_STORY_TEMPLATE.md`
+4. **Skills** are invoked automatically or explicitly via `Skill(skill: "skill-name")`
+5. **Git tracking**: Only `commands/`, `templates/`, `skills/`, `README.md`, `CLAUDE.md` are versioned
