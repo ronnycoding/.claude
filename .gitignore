@@ -3,13 +3,9 @@
 !.gitmodules
 !commands/
 !commands/**
-!agents
 !templates/
 !templates/**
 !README.md
 !CLAUDE.md
 !skills/
 !skills/**
-!plugins/
-!plugins/**
-!settings.json

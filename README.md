@@ -5,6 +5,10 @@ Personal Claude Code configuration directory featuring 83+ specialized AI agents
 ## Table of Contents
 
 - [Overview](#overview)
+- [Development Methodologies](#development-methodologies)
+  - [Individual: Issue-Driven Development](#1-individual-issue-driven-development)
+  - [Behavioral: Behavior-Driven Development (BDD)](#2-behavioral-behavior-driven-development-bdd)
+  - [Scaled: Epic-Driven Development (Agent Teams)](#3-scaled-epic-driven-development-agent-teams)
 - [Features](#features)
   - [Specialized AI Agents](#-specialized-ai-agents)
   - [Custom Skills](#-custom-skills)
@@ -17,6 +21,7 @@ Personal Claude Code configuration directory featuring 83+ specialized AI agents
   - [Basic Usage](#basic-usage)
 - [Command Examples](#command-examples)
   - [GitHub Workflows](#github-workflow-commands)
+  - [Architecture & Requirements](#architecture--requirements-commands)
   - [Research & Content](#research--content-commands)
 - [Skills Guide](#skills-guide)
   - [Claude Code Customization](#claude-code-customization-skills)
@@ -30,9 +35,232 @@ Personal Claude Code configuration directory featuring 83+ specialized AI agents
 This repository extends Claude Code with:
 - **83+ Specialized AI Agents** across Haiku/Sonnet/Opus model tiers for domain-specific expertise
 - **10 Custom Skills** for specialized tasks (financial analysis, WebGL development, Claude Code customization)
-- **9 Slash Commands** for GitHub workflows, research automation, and content generation
+- **13 Slash Commands** for GitHub workflows, architecture, requirements, research, and content generation
+- **3 Development Methodologies** — Issue-Driven, BDD, and Epic-Driven (Agent Teams)
 - **Multi-Agent Orchestration** patterns for complex development workflows
 - **Session Persistence** across projects and shell environments
+
+## Development Methodologies
+
+This configuration supports three progressive development approaches, each building on the previous.
+
+### 1. Individual: Issue-Driven Development
+
+**Flow:** `/issue` -> `/task`
+
+The most direct approach. Define features as structured GitHub issues with acceptance criteria, then execute with agent orchestration.
+
+```mermaid
+graph LR
+    A[Feature Idea] -->|/issue| B[Epic + Sub-Issues]
+    B -->|/task| C[Agent Orchestration]
+    C -->|/pr| D[Pull Request]
+    D -->|Review| E[Merge]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1f0
+    style E fill:#e1ffe1
+```
+
+```bash
+/issue "Add payment processing"
+# -> Epic #100 + Sub-issues #101, #102, #103
+#    with acceptance criteria, story points, agent assignments, dependency graphs
+
+/task #101
+# -> Agents implement, test, validate
+
+/pr
+# -> PR linked to #101
+```
+
+**Best for:** Technical features where requirements are clear and you want fast decomposition-to-implementation.
+
+---
+
+### 2. Behavioral: Behavior-Driven Development (BDD)
+
+**Flow:** `/user-story` -> `/issue` -> `/task`
+
+Starts from user behavior, formalizes it in Gherkin syntax, then decomposes and implements.
+
+```mermaid
+graph LR
+    A[User Behavior] -->|/user-story| B[BDD Spec + Gherkin]
+    B -->|/issue| C[Epic + Sub-Issues]
+    C -->|/task| D[Agent Orchestration]
+    D -->|/pr| E[Pull Request]
+    E -->|Review| F[Merge]
+
+    style A fill:#e1f5ff
+    style B fill:#f0e1ff
+    style C fill:#fff4e1
+    style D fill:#ffe1f0
+    style F fill:#e1ffe1
+```
+
+```bash
+/user-story
+# -> Defines persona, goal, benefit
+# -> Creates Gherkin scenarios (Given/When/Then)
+# -> Sets semantic version target
+# -> Creates GitHub issue with BDD specification
+
+/issue "Implement user authentication"
+# -> Decomposes BDD story into implementable sub-issues
+# -> Maps scenarios to acceptance criteria
+
+/task #124
+# -> Agents implement against Gherkin scenarios
+# -> Validates behavior matches specification
+```
+
+**Best for:** User-facing features where behavior must be formalized before implementation, or when working with non-technical stakeholders.
+
+#### Full BDD Workflow (Detailed)
+
+```mermaid
+graph TD
+    A[User Story] -->|/user-story| B[BDD Specification]
+    B -->|Gherkin Scenarios| C[Epic Creation]
+    C -->|/issue| D[Epic Parent Issue]
+
+    D -->|Decompose| E1[Sub-Issue 1: Backend API]
+    D -->|Decompose| E2[Sub-Issue 2: Frontend UI]
+    D -->|Decompose| E3[Sub-Issue 3: Database Schema]
+    D -->|Decompose| E4[Sub-Issue 4: Integration Tests]
+
+    E1 -->|/task| F1[Backend Tasks]
+    E2 -->|/task| F2[Frontend Tasks]
+    E3 -->|/task| F3[Database Tasks]
+    E4 -->|/task| F4[Testing Tasks]
+
+    F1 -->|Agent: backend-architect| G1[API Implementation]
+    F2 -->|Agent: frontend-developer| G2[UI Implementation]
+    F3 -->|Agent: database-optimizer| G3[Schema Migration]
+    F4 -->|Agent: test-automator| G4[Test Suite]
+
+    G1 -->|/pr| H1[Backend PR]
+    G2 -->|/pr| H2[Frontend PR]
+    G3 -->|/pr| H3[Database PR]
+    G4 -->|/pr| H4[Testing PR]
+
+    H1 -->|Review: security-auditor| I1[Security Check]
+    H2 -->|Review: code-reviewer| I2[Code Quality]
+    H3 -->|Review: database-admin| I3[Schema Validation]
+    H4 -->|Review: test-automator| I4[Coverage Check]
+
+    I1 & I2 & I3 & I4 -->|Merge| J[Integration Branch]
+    J -->|Final Review| K[Production Deploy]
+
+    style A fill:#e1f5ff
+    style D fill:#fff4e1
+    style E1 fill:#f0f0ff
+    style E2 fill:#f0f0ff
+    style E3 fill:#f0f0ff
+    style E4 fill:#f0f0ff
+    style G1 fill:#ffe1f0
+    style G2 fill:#ffe1f0
+    style G3 fill:#ffe1f0
+    style G4 fill:#ffe1f0
+    style K fill:#e1ffe1
+```
+
+**Workflow Phases:**
+
+1. **User Story Phase** (`/user-story`) — BDD specification with Gherkin scenarios and semantic versioning
+2. **Epic Creation Phase** (`/issue`) — Decomposition into sub-issues with dependencies, story points, and agent assignments
+3. **Task Distribution Phase** (`/task`) — Agent assignment with context isolation per sub-issue
+4. **Implementation Phase** — Parallel agent execution with domain-specific focus
+5. **Pull Request Phase** (`/pr`) — One PR per sub-issue with convention analysis
+6. **Review Phase** — Specialized validation agents (security, code quality, schema, performance)
+7. **Integration & Deploy** — Merge validated PRs and deploy
+
+---
+
+### 3. Scaled: Epic-Driven Development (Agent Teams)
+
+**Flow:** `/work-on-opens` (wraps `/task` + `/pr` internally)
+
+The scaled approach. Processes entire priority boards of epics using `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`, git worktrees for true parallel execution, and tier-based dependency resolution.
+
+```mermaid
+graph TD
+    A[Priority Board] -->|/work-on-opens| B{Epic Queue}
+    B -->|P0| C1[Epic 1]
+    B -->|P1| C2[Epic 2]
+    B -->|P2| C3[Epic 3]
+
+    C1 -->|Clarify 3rd-party| D1[Sub-Issues]
+    D1 -->|Dependency Graph| E1[Tier 0: Parallel]
+    E1 -->|Git Worktrees| F1[Agent Team]
+    F1 -->|/task + /pr| G1[PRs Created]
+    G1 -->|Tier 1| H1[Next Tier]
+    H1 -->|Complete| I1[Epic Done]
+
+    I1 --> C2
+    C2 --> D2[...]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style E1 fill:#f0f0ff
+    style F1 fill:#ffe1f0
+    style I1 fill:#e1ffe1
+```
+
+```bash
+/work-on-opens <project-board-url>
+# -> Fetches priority board (P0 > P1 > P2)
+# -> For each epic:
+#    1. Clarifies third-party integrations
+#    2. Builds dependency graph of sub-issues
+#    3. Groups into parallelizable tiers
+#    4. Creates git worktrees per sub-issue
+#    5. Runs /task in parallel (background agents)
+#    6. Creates PRs via /pr as sub-issues complete
+#    7. Reports recommended merge order
+# -> Moves to next epic by priority
+```
+
+**Best for:** Batch execution of a backlog, sprint-level throughput, or when multiple epics need resolution with maximum parallelism.
+
+---
+
+### Methodology Progression
+
+Each approach builds on the previous:
+
+```
+Individual            Behavioral              Scaled
+/issue -> /task       /user-story ->          /work-on-opens
+                      /issue -> /task           (wraps /task + /pr)
+                                                (agent teams)
+                                                (git worktrees)
+
+Complexity:  Low           Medium                   High
+Parallelism: Single        Single                   Multi-epic, multi-agent
+Input:       Feature       User behavior            Priority board
+Output:      1 PR          1 PR per sub-issue       N PRs across M epics
+```
+
+**Key Benefits Across All Methodologies:**
+
+- **Context Management**: Sub-issues keep token usage manageable
+- **Parallel Work**: Multiple agents work simultaneously
+- **Clear Dependencies**: Mermaid graphs show integration points
+- **Quality Gates**: Each PR gets specialized review
+- **Progress Tracking**: Parent issue shows overall completion
+- **Specialization**: Right expert for each component
+
+### Supporting Commands
+
+Two additional commands support the planning phase before entering any methodology:
+
+- **`/architecture`** — Define technology stacks, domain separation, and interconnection patterns before implementation
+- **`/mvp-requirements`** — Explore technical capabilities through documentation (NotebookLM) and define MVP scope
+
+These feed into any of the three flows above by producing requirements and architecture documents that `/issue` and `/user-story` can reference.
 
 ## Features
 
@@ -82,7 +310,11 @@ Command templates for automation and workflows:
 | `/issue` | GitHub | Multi-phase issue creation with sub-issue decomposition, dependency graphs, and team assignments | `/issue "Add user authentication feature"` |
 | `/pr` | GitHub | Comprehensive pull request creation with template detection and convention analysis | `/pr` (analyzes current branch) |
 | `/user-story` | GitHub | Create BDD user stories with Gherkin syntax and GitHub Projects integration | `/user-story` (interactive prompts) |
-| `/task` | GitHub | Task management and workflow coordination for sub-issues | `/task` (interactive task selection) |
+| `/task` | GitHub | Task orchestration with agent assignment and parallel execution | `/task #123` |
+| `/work-on-opens` | GitHub | Process priority board epics with agent teams and git worktrees | `/work-on-opens <board-url>` |
+| `/merge-and-test` | GitHub | Merge plan executor with Chrome DevTools MCP automated testing | `/merge-and-test #123` |
+| `/architecture` | Planning | Define project architecture with tech stacks, domains, and interconnections | `/architecture "E-commerce Platform"` |
+| `/mvp-requirements` | Planning | Define MVP requirements through documentation exploration and interactive scope | `/mvp-requirements --idea="Task management app"` |
 | `/todos` | Internal | Advanced todo tracking (used by Claude Code internally, not for direct user invocation) | Internal use only |
 | `/nlm-research` | Research | Generate research reports using NotebookLM with multi-source support and audio generation | `/nlm-research project="AI Trends" type="market-analysis" urls="https://..."` |
 | `/prompt` | Content | Create effective prompts using advanced prompt engineering techniques | `/prompt task="Generate API docs" format="markdown"` |
@@ -111,11 +343,40 @@ Command templates for automation and workflows:
   - GitHub Projects integration
   - Semantic versioning support
 
-- **`/task`** - Manages tasks with:
-  - Interactive task selection from sub-issues
-  - Agent assignment and coordination
-  - Progress tracking integration
-  - Sub-issue context management
+- **`/task`** - Orchestrates task resolution with:
+  - Agent capability assessment and assignment
+  - Parallel agent execution with progress monitoring
+  - Subtask decomposition (ST-001, ST-002, etc.)
+  - Consolidated PR creation with co-author attribution
+
+- **`/work-on-opens`** - Processes priority boards with:
+  - Epic prioritization (P0 > P1 > P2)
+  - Third-party integration clarification before implementation
+  - Git worktrees for parallel sub-issue resolution
+  - Tier-based dependency execution
+  - Agent teams (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`)
+  - Recommended merge order on completion
+
+- **`/merge-and-test`** - Executes merge plans with:
+  - PR queue processing from GitHub issues or markdown files
+  - Chrome DevTools MCP automated testing
+  - Auto-testable vs manual classification
+  - Manual testing GitHub issue generation
+  - Screenshot evidence collection
+
+**Planning & Architecture:**
+- **`/architecture`** - Defines project architecture with:
+  - Interactive tech stack selection by domain
+  - Interconnection pattern definition
+  - Mermaid diagram generation (system overview, data flow, deployment)
+  - Output as `tech-stack/` folder or single `ARCHITECTURE.md`
+
+- **`/mvp-requirements`** - Defines MVP scope with:
+  - NotebookLM documentation exploration
+  - Capabilities-first approach grounded in technical docs
+  - Interactive scope clarification with stakeholders
+  - Phased development approach (not time-based)
+  - Output as markdown, GitHub issue, or both
 
 - **`/todos`** - Internal tracking system:
   - Used automatically by Claude Code
@@ -168,175 +429,6 @@ payment-integration → security-auditor → Validated implementation
 Dynamic agent selection based on analysis:
 ```
 debugger → [backend-architect | frontend-developer | devops-troubleshooter]
-```
-
-### 📋 GitHub Epic/Task Workflow
-
-Complete workflow from user story to deployment using Epic (parent issue) / Task (sub-issue) approach with agent orchestration:
-
-```mermaid
-graph TD
-    A[User Story] -->|/user-story| B[BDD Specification]
-    B -->|Gherkin Scenarios| C[Epic Creation]
-    C -->|/issue| D[Epic Parent Issue]
-
-    D -->|Decompose| E1[Sub-Issue 1: Backend API]
-    D -->|Decompose| E2[Sub-Issue 2: Frontend UI]
-    D -->|Decompose| E3[Sub-Issue 3: Database Schema]
-    D -->|Decompose| E4[Sub-Issue 4: Integration Tests]
-
-    E1 -->|/task| F1[Backend Tasks]
-    E2 -->|/task| F2[Frontend Tasks]
-    E3 -->|/task| F3[Database Tasks]
-    E4 -->|/task| F4[Testing Tasks]
-
-    F1 -->|Agent: backend-architect| G1[API Implementation]
-    F2 -->|Agent: frontend-developer| G2[UI Implementation]
-    F3 -->|Agent: database-optimizer| G3[Schema Migration]
-    F4 -->|Agent: test-automator| G4[Test Suite]
-
-    G1 -->|/pr| H1[Backend PR]
-    G2 -->|/pr| H2[Frontend PR]
-    G3 -->|/pr| H3[Database PR]
-    G4 -->|/pr| H4[Testing PR]
-
-    H1 -->|Review: security-auditor| I1[Security Check]
-    H2 -->|Review: code-reviewer| I2[Code Quality]
-    H3 -->|Review: database-admin| I3[Schema Validation]
-    H4 -->|Review: test-automator| I4[Coverage Check]
-
-    I1 & I2 & I3 & I4 -->|Merge| J[Integration Branch]
-    J -->|Final Review| K[Production Deploy]
-
-    style A fill:#e1f5ff
-    style D fill:#fff4e1
-    style E1 fill:#f0f0ff
-    style E2 fill:#f0f0ff
-    style E3 fill:#f0f0ff
-    style E4 fill:#f0f0ff
-    style G1 fill:#ffe1f0
-    style G2 fill:#ffe1f0
-    style G3 fill:#ffe1f0
-    style G4 fill:#ffe1f0
-    style K fill:#e1ffe1
-```
-
-**Workflow Breakdown:**
-
-1. **User Story Phase** (`/user-story`)
-   - Create BDD specification with Gherkin scenarios
-   - Define acceptance criteria
-   - Set semantic version target
-
-2. **Epic Creation Phase** (`/issue`)
-   - Analyze repository conventions
-   - Review available skills for specialization
-   - Decompose into sub-issues with:
-     - Clear scope boundaries
-     - Dependency mapping
-     - Agent/team assignments
-     - Story point estimation (Fibonacci)
-   - Generate Mermaid dependency graph
-   - Create parent issue (Epic) with task breakdown table
-
-3. **Task Distribution Phase** (`/task`)
-   - Each sub-issue becomes independent task
-   - `/task` command manages task assignment and tracking
-   - Assign specialized agents:
-     - `backend-architect` → API design & implementation
-     - `frontend-developer` → UI components & state
-     - `database-optimizer` → Schema & queries
-     - `test-automator` → Test coverage & automation
-   - Claude Code tracks progress internally
-   - Context isolation: Each agent works independently
-
-4. **Implementation Phase** (Agent Orchestration)
-   - Agents work in parallel on assigned sub-issues
-   - Limited context prevents token overflow
-   - Each agent focuses on specific domain
-   - Integration interfaces defined upfront
-
-5. **Pull Request Phase** (`/pr`)
-   - Each sub-issue generates separate PR
-   - Template detection and convention analysis
-   - Change classification and risk assessment
-   - Testing evidence and verification
-
-6. **Review Phase** (Validation Agents)
-   - `security-auditor` → Security vulnerabilities
-   - `code-reviewer` → Code quality & patterns
-   - `database-admin` → Schema integrity
-   - `performance-engineer` → Performance impact
-
-7. **Integration & Deploy**
-   - Merge validated PRs
-   - Final integration testing
-   - Production deployment
-
-**Key Benefits:**
-
-- **Context Management**: Sub-issues keep token usage manageable
-- **Parallel Work**: Multiple agents work simultaneously
-- **Clear Dependencies**: Mermaid graphs show integration points
-- **Quality Gates**: Each PR gets specialized review
-- **Progress Tracking**: Parent issue shows overall completion
-- **Specialization**: Right expert for each component
-
-**Example Command Sequence:**
-
-```bash
-# 1. Create user story
-/user-story
-# Interactive: Feature name, persona, goal, scenarios
-# Output: GitHub issue with BDD specification
-
-# 2. Create epic with sub-issues
-/issue "Add user authentication system"
-# Output: Epic #123 + Sub-issues #124, #125, #126, #127
-# Epic includes: task breakdown table, dependency graph, story points
-
-# 3. Manage sub-issue #124 as task
-/task
-# Select sub-issue #124 (Backend API)
-# Assigns to backend-architect agent
-# Tracks implementation progress
-# (Claude Code manages internal todos automatically)
-
-# 4. Work on sub-issue #124 (Backend API)
-"Use backend-architect to implement authentication endpoints for issue #124"
-# Agent implements with focused context
-# Reviews, tests, and validates
-
-# 5. Create PR for sub-issue #124
-/pr
-# Generates PR linked to #124
-# Includes: changes summary, test plan, evidence
-# Triggers: security-auditor for review
-
-# 6. Manage sub-issue #125 as task
-/task
-# Select sub-issue #125 (Frontend UI)
-# Assigns to frontend-developer agent
-
-# 7. Work on sub-issue #125 (Frontend UI)
-"Use frontend-developer to build authentication UI for issue #125"
-# Agent implements UI components
-# Reviews, tests, and validates
-
-# 8. Create PR for sub-issue #125
-/pr
-# Generates PR linked to #125
-# Triggers: code-reviewer for review
-
-# 9. Repeat for remaining sub-issues #126, #127
-# Each sub-issue follows: /task → implement → /pr
-
-# 10. Integration phase
-# All PRs merged to integration branch
-# Final validation and deployment
-
-# Note: Claude Code internally tracks todos and progress
-# No manual todo management needed
 ```
 
 ### 📋 Common Workflow Patterns
@@ -451,16 +543,20 @@ claude todos --status [--tree]
 ├── settings.json          # Claude Code settings
 ├── .gitignore            # Git configuration
 │
-├── commands/             # Slash command templates (9 commands)
+├── commands/             # Slash command templates (13 commands)
 │   ├── README.md         # Command documentation
 │   ├── issue.md          # Multi-phase issue creation workflow
 │   ├── pr.md             # Comprehensive PR creation workflow
 │   ├── user-story.md     # BDD user story with Gherkin syntax
+│   ├── task.md           # Task orchestration with agents
+│   ├── work-on-opens.md  # Priority board epic resolution
+│   ├── merge-and-test.md # Merge plan executor with Chrome MCP
+│   ├── architecture.md   # Architecture definition workflow
+│   ├── mvp-requirements.md # MVP requirements definition
 │   ├── todos.md          # Todo tracking with orchestration
 │   ├── nlm-research.md   # NotebookLM research automation
 │   ├── prompt.md         # Prompt engineering assistant
-│   ├── tiktok-tech.md    # TikTok tech content creation
-│   └── task.md           # Task management workflow
+│   └── tiktok-tech.md    # TikTok tech content creation
 │
 ├── skills/              # Custom skills (10 skills)
 │   ├── Claude Code Customization/
@@ -567,32 +663,26 @@ Skills provide specialized domain expertise and task automation:
 Commands provide quick access to workflows and templates:
 
 ```bash
-# GitHub Workflows
-/issue "Add user authentication feature"
-→ Creates multi-phase issue with sub-tasks and dependencies
+# Development Methodologies
+/issue "Add user authentication feature"     # Flow 1: Issue-Driven
+/user-story                                   # Flow 2: BDD (then /issue -> /task)
+/work-on-opens <board-url>                    # Flow 3: Epic-Driven (Agent Teams)
 
-/pr
-→ Generates comprehensive PR with template detection
+# Task Execution
+/task #123                                    # Orchestrate agents on a sub-issue
+/pr                                           # Create PR with convention analysis
 
-/user-story
-→ Creates BDD user story with Gherkin scenarios
+# Planning & Architecture
+/architecture "E-commerce Platform"           # Define tech stack and architecture
+/mvp-requirements --idea="Task manager app"   # Define MVP scope and requirements
 
-/todos --init --project="MyApp"
-→ Initializes todo tracking
+# Testing
+/merge-and-test #123                          # Execute merge plan with Chrome MCP tests
 
 # Research & Content
 /nlm-research project="Market Analysis" type="competitive-intel"
-→ Generates NotebookLM research report
-
 /prompt task="Generate API documentation" format="markdown"
-→ Creates optimized prompt using engineering techniques
-
 /tiktok-tech "Latest AI developments in 2025"
-→ Generates TikTok script for tech news
-
-# Utilities
-/task
-→ Manages and coordinates tasks
 ```
 
 #### GitHub Workflows (Detailed)
@@ -722,6 +812,83 @@ Commands provide quick access to workflows and templates:
 /todos --status          # Standard view
 /todos --status --tree   # Tree view with dependencies
 ```
+
+### Architecture & Requirements Commands
+
+#### `/architecture` - Define Project Architecture
+
+**Basic usage:**
+```bash
+/architecture "E-commerce Platform"
+```
+
+**What it does:**
+1. Checks for existing requirements documents
+2. Interactively gathers tech stack preferences by domain
+3. Defines interconnection patterns between domains
+4. Generates comprehensive architecture documentation
+5. Creates Mermaid diagrams (system overview, data flow, deployment)
+
+**Output:**
+- `tech-stack/` folder with domain-specific docs and diagrams
+- Or single `ARCHITECTURE.md` file
+- Architecture analysis with cost and risk assessment
+
+#### `/mvp-requirements` - Define MVP Requirements
+
+**Basic usage:**
+```bash
+/mvp-requirements --idea="A task management app for remote teams"
+```
+
+**What it does:**
+1. Explores technical documentation via NotebookLM
+2. Interactively clarifies scope with stakeholders
+3. Maps requirements to documented capabilities
+4. Generates comprehensive requirements document with 13 sections
+
+**Output:**
+- `mvp-requirements-$PROJECT-YYYYMMDD.md`
+- Optional GitHub issue with sub-issue decomposition
+- `mvp-documentation.md` reference file
+
+#### `/work-on-opens` - Process Priority Board
+
+**Basic usage:**
+```bash
+/work-on-opens <project-board-url>
+```
+
+**What it does:**
+1. Fetches and prioritizes epics from GitHub Projects board
+2. Clarifies third-party integrations before implementation
+3. Creates git worktrees for parallel sub-issue resolution
+4. Runs `/task` in background for each sub-issue
+5. Creates PRs via `/pr` as sub-issues complete
+6. Reports recommended merge order per epic
+
+**Output:**
+- PRs for every sub-issue across all epics
+- Epic completion summaries with merge order
+- Board completion report
+
+#### `/merge-and-test` - Execute Merge Plan
+
+**Basic usage:**
+```bash
+/merge-and-test #123
+```
+
+**What it does:**
+1. Parses merge plan from GitHub issue or markdown file
+2. Processes each PR: checkout, merge, classify tests
+3. Runs Chrome DevTools MCP tests for auto-testable changes
+4. Creates "Manual Testing" GitHub issue for skipped scenarios
+
+**Output:**
+- Merged PRs with test results
+- Screenshots in `test-evidence/`
+- Manual testing GitHub issue
 
 ### Research & Content Commands
 
@@ -1174,8 +1341,8 @@ All sessions persist across Claude Code invocations:
 ### Privacy & Git
 
 The `.gitignore` is configured to:
-- **Track**: `commands/`, `agents/`, `templates/`, `README.md`, `CLAUDE.md`
-- **Ignore**: `projects/`, `shell-snapshots/`, `todos/`, `statsig/`, `ide/`, session data
+- **Track**: `commands/`, `templates/`, `skills/`, `README.md`, `CLAUDE.md`
+- **Ignore**: `agents/`, `plugins/`, `settings.json`, `projects/`, `shell-snapshots/`, `todos/`, `statsig/`, `ide/`, session data
 
 Only shared configuration and templates are version controlled.
 

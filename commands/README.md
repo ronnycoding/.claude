@@ -9,9 +9,14 @@ Comprehensive documentation for all Claude Code slash commands and workflows.
   - [/issue - Issue Creation](#issue---github-issue-creation)
   - [/pr - Pull Request Creation](#pr---github-pull-request-creation)
   - [/user-story - BDD User Stories](#user-story---bdd-user-story-creation)
+  - [/work-on-opens - Priority Board Resolution](#work-on-opens---priority-board-epic-resolution)
+  - [/merge-and-test - Merge Plan Executor](#merge-and-test---merge-plan-executor)
 - [Task Management Commands](#task-management-commands)
   - [/task - Task Orchestration](#task---task-orchestration)
   - [/todos - Todo Tracking](#todos---todo-tracking)
+- [Architecture & Requirements Commands](#architecture--requirements-commands)
+  - [/architecture - Architecture Definition](#architecture---architecture-definition)
+  - [/mvp-requirements - MVP Requirements](#mvp-requirements---mvp-requirements-definition)
 - [Content Generation Commands](#content-generation-commands)
   - [/nlm-research - Research Generator](#nlm-research---notebooklm-research-generator)
   - [/tiktok-tech - TikTok Scripts](#tiktok-tech---tiktok-tech-news-digest)
@@ -253,6 +258,116 @@ Feature: Admin Analytics Dashboard
 
 ---
 
+### `/work-on-opens` - Priority Board Epic Resolution
+
+Iterates through a GitHub Projects priority board, resolves epics in priority order by working sub-issues in parallel using git worktrees, and creates PRs for each.
+
+**Usage:**
+```bash
+/work-on-opens <project-board-url-or-number>
+```
+
+**Workflow Phases:**
+
+1. **Board Discovery & Epic Prioritization**
+   - Fetches project board items sorted by priority
+   - Builds ordered queue of open epics (P0 > P1 > P2)
+   - Confirms with user before starting
+
+2. **Epic Pre-Flight - Third-Party Clarification**
+   - Scans epic and sub-issues for third-party service references
+   - Asks about provider choices (payment, notifications, auth, storage, etc.)
+   - Collects all decisions before implementation begins
+
+3. **Sub-Issue Analysis & Parallel Execution Plan**
+   - Extracts all sub-issues from the epic body
+   - Builds dependency graph and groups into parallelizable tiers
+   - Sets up git worktrees for parallel execution
+
+4. **Parallel Sub-Issue Resolution**
+   - Launches `/task` for each sub-issue in its dedicated worktree
+   - Runs independent sub-issues in parallel (background tasks)
+   - Creates PRs via `/pr` as sub-issues complete
+   - Processes tiers sequentially (Tier 0 before Tier 1, etc.)
+
+5. **Epic Completion & Cleanup**
+   - Cleans up worktrees
+   - Updates epic issue with completion status
+   - Presents summary with recommended merge order
+
+6. **Move to Next Epic**
+   - Reports board progress and confirms continuation
+   - Loops through remaining epics by priority
+
+7. **Board Completion Summary**
+   - Total epics processed, sub-issues resolved, PRs created
+   - Breakdown by priority level
+   - Third-party integrations used
+
+**Tier-Based Execution:**
+```
+Tier 0 (no deps, run in parallel):  #10, #11, #12
+Tier 1 (depends on Tier 0):         #13 (needs #10), #14 (needs #11)
+Tier 2 (depends on Tier 1):         #15 (needs #13, #14)
+```
+
+**Key Features:**
+- Git worktrees for true parallel sub-issue work
+- One PR per sub-issue (never bundled)
+- Automatic third-party integration clarification
+- Dependency-aware tier execution
+- Resume support on interruption
+
+---
+
+### `/merge-and-test` - Merge Plan Executor
+
+Reads a merge plan from a GitHub issue or markdown file, processes each PR in order (checkout, merge, run Chrome DevTools MCP tests), and creates a "Manual Testing" issue for scenarios that cannot be automated.
+
+**Usage:**
+```bash
+/merge-and-test #123          # From GitHub issue
+/merge-and-test merge-plan.md # From markdown file
+```
+
+**Workflow Phases:**
+
+1. **Read and Parse the Merge Plan**
+   - Fetches from GitHub issue or reads markdown file
+   - Extracts ordered list of PRs
+   - Displays parsed plan for user confirmation
+
+2. **Process Each PR**
+   - Fetches PR details and checks mergeability
+   - Performs checkout and merge
+   - Classifies test requirements (auto-testable vs manual)
+   - Runs Chrome DevTools MCP tests for auto-testable changes
+   - Logs results with screenshots as evidence
+
+3. **Create "Manual Testing" GitHub Issue**
+   - Generates issue for scenarios requiring manual verification
+   - Includes PR summary table, manual test steps, and required setup
+   - Labels: `testing`, `manual-testing`
+
+**Auto-Testable (Chrome MCP):**
+- UI rendering and layout changes
+- Navigation and routing
+- Form interactions (client-side only)
+- Client-side filtering, sorting, pagination
+- Modal/dialog behavior, theme/styling changes
+
+**Skipped (Manual Required):**
+- Payment processing, email sending, OAuth flows
+- SMS/push notifications, file storage uploads
+- Analytics tracking, any API calls requiring secret keys
+
+**Output:**
+- Per-PR merge status and test results
+- Screenshots saved to `test-evidence/`
+- Manual testing GitHub issue with all skipped scenarios
+
+---
+
 ## Task Management Commands
 
 ### `/task` - Task Orchestration
@@ -451,6 +566,146 @@ Advanced todo tracking with agent orchestration support and rich formatting.
 - 🟠 High
 - 🟡 Medium
 - 🟢 Low
+
+---
+
+## Architecture & Requirements Commands
+
+### `/architecture` - Architecture Definition
+
+Defines comprehensive project architectures by analyzing requirements, selecting technology stacks through interactive questioning, and generating detailed documentation with Mermaid diagrams.
+
+**Usage:**
+```bash
+/architecture "E-commerce Platform"
+/architecture "Internal Dashboard"
+```
+
+**Workflow Phases:**
+
+1. **Initial Setup**
+   - Asks about output format: Markdown files (`tech-stack/` folder), single `ARCHITECTURE.md`, or both
+
+2. **Project Context Analysis**
+   - Checks for existing requirements documents (`mvp-requirements*.md`, etc.)
+   - If found, offers to base architecture on existing requirements
+   - If not found, proceeds with interactive mode
+
+3. **Requirements Gathering (Interactive)**
+   - Application type & scope (web, mobile, API, etc.)
+   - Expected scale (prototype to enterprise)
+   - Deployment target (cloud, self-hosted, serverless)
+   - Application domains (frontend, backend, database, etc.)
+   - Integration requirements (payments, email, OAuth, etc.)
+
+4. **Technology Stack Selection by Domain**
+   - **Frontend:** Framework, styling, state management, build tool, type safety
+   - **Backend:** Language, framework, API style, validation
+   - **Database:** Primary DB, ORM, caching, search engine
+   - **Mobile:** Platform strategy, framework, state management
+   - **Infrastructure:** Cloud provider, containers, CI/CD, IaC
+   - **Authentication:** Auth method, authorization pattern
+
+5. **Interconnection Pattern Definition**
+   - Frontend-backend communication protocol
+   - Data format, real-time updates, API versioning
+   - Service discovery (for microservices)
+
+6. **Architecture Analysis & Recommendations**
+   - Stack compatibility, performance, security, cost, DX review
+
+7. **Generate Architecture Documentation**
+   - Master overview (`tech-stack/README.md`)
+   - Domain-specific docs (frontend.md, backend.md, etc.)
+   - Mermaid diagrams (system overview, data flow, deployment)
+
+8. **Validation & Recommendations**
+   - Anti-pattern detection, cost analysis, risk assessment
+
+**Output Structure:**
+```
+tech-stack/
+├── README.md                # Architecture overview & interconnections
+├── frontend.md              # Frontend stack
+├── backend.md               # Backend stack
+├── database.md              # Database & data layer
+├── infrastructure.md        # DevOps, hosting, CI/CD
+├── authentication.md        # Auth & security
+├── api.md                   # API layer & integrations
+├── monitoring.md            # Observability & monitoring
+└── diagrams/
+    ├── system-overview.mmd  # Mermaid diagram
+    ├── data-flow.mmd        # Data flow diagram
+    └── deployment.mmd       # Deployment diagram
+```
+
+---
+
+### `/mvp-requirements` - MVP Requirements Definition
+
+Defines MVP requirements by exploring technical documentation through NotebookLM, interactively clarifying scope with stakeholders, and generating a capabilities-focused requirements document.
+
+**Usage:**
+```bash
+/mvp-requirements --idea="A task management app that helps remote teams collaborate asynchronously"
+```
+
+**Workflow Phases:**
+
+1. **Setup & Documentation Access**
+   - Extracts project name from idea
+   - Loads NotebookLM skill for documentation exploration
+   - Asks about existing documentation (notebook ID, URLs, or none)
+   - Creates `mvp-documentation.md` reference file
+
+2. **Explore Technical Capabilities (if documentation exists)**
+   - Generates initial technical overview from documentation
+   - Interactively queries notebook as requirements emerge
+   - Builds capability inventory (core features, APIs, integrations, limitations)
+   - Documents technical constraints as discovered
+
+3. **Interactive Requirements Clarification**
+   - **Project Context:** Problem statement, target user, timeline
+   - **Core Functionality:** MUST-HAVE vs NICE-TO-HAVE features
+   - **User Workflows:** Primary journey, critical success criteria
+   - **Data & Integration:** Data types, required integrations, volume
+   - **Technical Constraints:** Technology requirements, deployment, scalability
+   - **Success Metrics:** KPIs and minimum performance thresholds
+
+4. **Scope Analysis & Feasibility**
+   - Maps requirements to documented capabilities
+   - Identifies gaps requiring custom development
+   - Recommends scope adjustments for aggressive timelines
+
+5. **Generate MVP Requirements Document**
+   - Comprehensive markdown with 13 sections
+   - Saves as `mvp-requirements-$PROJECT-YYYYMMDD.md`
+
+6. **Output Generation**
+   - Options: Markdown file, GitHub issue, or both
+   - GitHub issue can include sub-issue decomposition with story points
+
+**Requirements Document Sections:**
+1. Executive Summary
+2. Technical Foundation
+3. Available Capabilities
+4. MVP Scope Definition (MUST-HAVE / NICE-TO-HAVE / OUT OF SCOPE)
+5. User Workflows
+6. Data Requirements
+7. Integration Requirements
+8. Non-Functional Requirements
+9. Technical Risks & Mitigations
+10. Development Approach (phased)
+11. Future Roadmap
+12. Documentation & Resources
+13. Next Steps
+
+**Key Features:**
+- Capabilities-first approach grounded in documentation
+- NotebookLM integration for technical validation
+- Progressive questioning (not all at once)
+- Traceability between requirements and documented capabilities
+- Phase-based timeline (not week-based)
 
 ---
 
