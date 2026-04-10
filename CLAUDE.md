@@ -82,6 +82,30 @@ tell application "Calendar"
 end tell
 ```
 
+## MemPalace Memory System
+
+MemPalace is active as an MCP server with 19 tools for persistent memory across sessions.
+
+**At session start:** The `SessionStart` hook auto-initializes and mines the project if the palace doesn't exist yet. Always call `mempalace_status` at the beginning of every session to load the memory protocol and AAAK spec — even when already initialized.
+
+**When to search (call `mempalace_search`):**
+- Before answering questions about past decisions, architecture choices, or preferences
+- When context references something that may have been discussed before
+- When asked "why did we..." or "what did we decide about..."
+
+**When to save (call `mempalace_add_drawer`):**
+- After important decisions or architecture choices
+- When solving a non-trivial bug (include root cause + fix)
+- At task completion — file the outcome to the relevant wing/room
+
+**Wing/room structure:** Use `mempalace_list_wings` and `mempalace_list_rooms` to navigate. File memories to the correct wing (person or project) and room (topic).
+
+**Agents:** When spawning subagents for significant tasks, instruct them to call `mempalace_search` for context and `mempalace_add_drawer` to persist findings.
+
+**Palace location:** Each project stores its own palace at `<project_dir>/.mempalace`. The `SessionStart` hook updates `~/.mempalace/config.json` at session start so the MCP server always points to the current project.
+
+Auto-save hooks are active — Stop hook fires every 15 messages, PreCompact hook fires before context compression.
+
 ## Usage Notes
 
 1. **Command templates** reference specific file paths — always load templates first

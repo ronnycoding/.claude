@@ -21,7 +21,7 @@
       "repo": "neondatabase-labs/ai-rules"
     },
     "installLocation": "/Users/ronny.freites/.claude/plugins/marketplaces/neon",
-    "lastUpdated": "2026-02-21T05:14:30.649Z"
+    "lastUpdated": "2026-04-10T02:47:42.908Z"
   },
   "claude-plugins-official": {
     "source": {
@@ -29,6 +29,22 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-02-18T04:23:47.110Z"
+    "lastUpdated": "2026-04-10T02:47:55.536Z"
+  },
+  "caveman": {
+    "source": {
+      "source": "github",
+      "repo": "JuliusBrussee/caveman"
+    },
+    "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/caveman",
+    "lastUpdated": "2026-04-07T14:58:03.318Z"
+  },
+  "mempalace": {
+    "source": {
+      "source": "github",
+      "repo": "milla-jovovich/mempalace"
+    },
+    "installLocation": "/Users/ronnycoding/.claude/plugins/marketplaces/mempalace",
+    "lastUpdated": "2026-04-10T02:05:08.043Z"
   }
 }

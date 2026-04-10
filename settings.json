@@ -1,11 +1,29 @@
 {
-  "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true,
-    "chrome-devtools-mcp@chrome-devtools-plugins": true
-  },
-  "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "medium",
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  }
+  },
+  "model": "sonnet",
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "chrome-devtools-mcp@chrome-devtools-plugins": true,
+    "caveman@caveman": true,
+    "mempalace@mempalace": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "mempalace": {
+      "source": {
+        "source": "github",
+        "repo": "milla-jovovich/mempalace"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }
