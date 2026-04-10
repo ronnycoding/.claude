@@ -15,7 +15,7 @@ Personal Claude Code configuration directory with 83+ specialized AI agents, 13 
 
 2. **Run the setup script:**
    ```bash
-   ~/.claude/setup.sh
+   chmod +x ~/.claude/setup.sh && ~/.claude/setup.sh
    ```
    This installs `mempalace` globally via `pip3`, copies `settings.local.json` from the example, and marks hooks executable.
 
