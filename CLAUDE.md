@@ -104,7 +104,7 @@ MemPalace is active as an MCP server with 19 tools for persistent memory across 
 
 **Palace location:** Each project stores its own palace at `<project_dir>/.mempalace`. The hooks update `~/.mempalace/config.json` so the MCP server always points to the current project.
 
-**Scope:** MemPalace is project-scoped. Hooks live in `<project>/.claude/settings.local.json`, not globally. Copy `~/.claude/settings.local.json.example` to enable it per project. Also requires `pip3 install mempalace` on each machine.
+**Setup:** Requires `pip3 install mempalace` on each machine. On machines without it the hook exits silently with no side effects.
 
 ## Usage Notes
 

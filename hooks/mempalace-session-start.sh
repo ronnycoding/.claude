@@ -1,54 +1,49 @@
 #!/bin/bash
 # MemPalace UserPromptSubmit Hook
+# Palace lives at <project>/.mempalace — project-scoped, not global.
+# Exits silently if mempalace is not installed.
 
 MEMPALACE=$(command -v mempalace 2>/dev/null || ls "$HOME"/Library/Python/*/bin/mempalace 2>/dev/null | tail -1)
+
+# Bail immediately if mempalace is not installed — no side effects
+if [ -z "$MEMPALACE" ] || [ ! -f "$MEMPALACE" ]; then
+    echo '{}'
+    exit 0
+fi
+
 GLOBAL_CONFIG="$HOME/.mempalace/config.json"
 LOG_DIR="$HOME/.mempalace/hook_state"
 LOG="$LOG_DIR/init.log"
 
 mkdir -p "$LOG_DIR"
-
-# Bail early if mempalace is not installed
-if [ ! -f "$MEMPALACE" ]; then
-    echo '{}'
-    exit 0
-fi
-
 mkdir -p "$HOME/.mempalace"
 
-# Log immediately to confirm the hook fired
 echo "[$(date '+%H:%M:%S')] HOOK FIRED" >> "$LOG"
 
-# Read and save input to a temp file (avoids quoting issues in subshells)
+# Parse cwd from hook JSON input
 TMPFILE=$(mktemp)
 cat > "$TMPFILE"
 
-# Log raw input for debugging
-echo "[$(date '+%H:%M:%S')] INPUT: $(cat $TMPFILE)" >> "$LOG"
-
-# Parse cwd
 PROJECT_DIR=$(/usr/bin/python3 -c "
-import sys, json
+import json
 try:
     data = json.load(open('$TMPFILE'))
     print(data.get('cwd', ''))
-except Exception as e:
+except:
     print('')
 " 2>>"$LOG")
 
 rm -f "$TMPFILE"
 
-echo "[$(date '+%H:%M:%S')] PROJECT_DIR=$PROJECT_DIR" >> "$LOG"
-
-# Fallbacks
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
     PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$HOME}"
-    echo "[$(date '+%H:%M:%S')] Fallback PROJECT_DIR=$PROJECT_DIR" >> "$LOG"
 fi
 
 PALACE_PATH="$PROJECT_DIR/.mempalace"
 
-# Sync MCP config
+echo "[$(date '+%H:%M:%S')] PROJECT_DIR=$PROJECT_DIR palace=$PALACE_PATH" >> "$LOG"
+
+# Sync MCP server config to point at this project's palace
 /usr/bin/python3 -c "
 import json
 cfg = '$GLOBAL_CONFIG'
@@ -62,15 +57,15 @@ with open(cfg, 'w') as f:
     json.dump(data, f, indent=2)
 " 2>>"$LOG"
 
-# Exit immediately if palace already exists
+# Fast exit if palace already exists
 if [ -d "$PALACE_PATH" ]; then
-    echo "[$(date '+%H:%M:%S')] Palace exists at $PALACE_PATH — done" >> "$LOG"
+    echo '[$(date '+%H:%M:%S')] Palace exists — done' >> "$LOG"
     echo '{}'
     exit 0
 fi
 
 # Init + mine in background
-echo "[$(date '+%H:%M:%S')] No palace — starting init+mine in background for $PALACE_PATH" >> "$LOG"
+echo "[$(date '+%H:%M:%S')] No palace — init+mine in background" >> "$LOG"
 (
     "$MEMPALACE" --palace "$PALACE_PATH" init "$PROJECT_DIR" --yes >> "$LOG" 2>&1
     echo "[$(date '+%H:%M:%S')] Init exit $?" >> "$LOG"
