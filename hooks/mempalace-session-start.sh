@@ -64,6 +64,9 @@ if [ -d "$PALACE_PATH" ]; then
     exit 0
 fi
 
+# Create palace dir so it exists even if init/mine fail
+mkdir -p "$PALACE_PATH"
+
 # Init + mine in background
 echo "[$(date '+%H:%M:%S')] No palace — init+mine in background" >> "$LOG"
 (
