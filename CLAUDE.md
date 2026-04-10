@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal Claude Code configuration directory with 83+ specialized AI agents, 13 custom skills, 13 slash commands, and three development methodologies.
 
+## Setup (New Machine)
+
+1. **Clone the repo into `~/.claude`:**
+   ```bash
+   git clone --recurse-submodules git@github.com:ronnycoding/.claude.git ~/.claude
+   ```
+
+2. **Run the setup script:**
+   ```bash
+   ~/.claude/setup.sh
+   ```
+   This installs `mempalace` globally via `pip3`, copies `settings.local.json` from the example, and marks hooks executable.
+
+3. **Restart Claude Code** to activate hooks and the mempalace MCP server.
+
+---
+
 ## Development Methodologies
 
 Three progressive approaches — always reference `README.md` for full workflow diagrams:
