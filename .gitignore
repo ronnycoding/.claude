@@ -10,3 +10,5 @@
 !skills/
 !skills/**
 !settings.local.json.example
+!hooks/
+!hooks/**
