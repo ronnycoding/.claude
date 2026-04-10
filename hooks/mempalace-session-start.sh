@@ -67,12 +67,12 @@ fi
 # Create palace dir so it exists even if init/mine fail
 mkdir -p "$PALACE_PATH"
 
-# Init + mine in background
+# Init + mine in background — use python3 -m mempalace to avoid shebang issues
 echo "[$(date '+%H:%M:%S')] No palace — init+mine in background" >> "$LOG"
 (
-    "$MEMPALACE" --palace "$PALACE_PATH" init "$PROJECT_DIR" --yes >> "$LOG" 2>&1
+    /usr/bin/python3 -m mempalace --palace "$PALACE_PATH" init "$PROJECT_DIR" --yes >> "$LOG" 2>&1
     echo "[$(date '+%H:%M:%S')] Init exit $?" >> "$LOG"
-    "$MEMPALACE" --palace "$PALACE_PATH" mine "$PROJECT_DIR" >> "$LOG" 2>&1
+    /usr/bin/python3 -m mempalace --palace "$PALACE_PATH" mine "$PROJECT_DIR" >> "$LOG" 2>&1
     echo "[$(date '+%H:%M:%S')] Mine exit $?" >> "$LOG"
 ) &
 
