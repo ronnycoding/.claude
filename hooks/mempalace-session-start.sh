@@ -1,7 +1,7 @@
 #!/bin/bash
 # MemPalace UserPromptSubmit Hook
 
-MEMPALACE="/Users/ronnycoding/Library/Python/3.9/bin/mempalace"
+MEMPALACE="$HOME/Library/Python/3.9/bin/mempalace"
 GLOBAL_CONFIG="$HOME/.mempalace/config.json"
 LOG_DIR="$HOME/.mempalace/hook_state"
 LOG="$LOG_DIR/init.log"

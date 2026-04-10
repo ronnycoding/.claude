@@ -304,7 +304,7 @@ Generate a filename based on the content:
 - Use today's date for the timestamp
 
 ### File Location
-Save the file in: `/Users/ronnycoding/projects/my-agents/docs/tiktok-scripts/`
+Save the file in: `$HOME/projects/my-agents/docs/tiktok-scripts/`
 
 If the directory doesn't exist, create it first.
 
