@@ -10,5 +10,6 @@
 !skills/
 !skills/**
 !settings.local.json.example
+!setup.sh
 !hooks/
 !hooks/**
