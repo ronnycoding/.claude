@@ -102,9 +102,9 @@ MemPalace is active as an MCP server with 19 tools for persistent memory across 
 
 **Agents:** When spawning subagents for significant tasks, instruct them to call `mempalace_search` for context and `mempalace_add_drawer` to persist findings.
 
-**Palace location:** Each project stores its own palace at `<project_dir>/.mempalace`. The `SessionStart` hook updates `~/.mempalace/config.json` at session start so the MCP server always points to the current project.
+**Palace location:** Each project stores its own palace at `<project_dir>/.mempalace`. The hooks update `~/.mempalace/config.json` so the MCP server always points to the current project.
 
-Auto-save hooks are active — Stop hook fires every 15 messages, PreCompact hook fires before context compression.
+**Scope:** MemPalace is project-scoped. Hooks live in `<project>/.claude/settings.local.json`, not globally. Copy `~/.claude/settings.local.json.example` to enable it per project. Also requires `pip3 install mempalace` on each machine.
 
 ## Usage Notes
 

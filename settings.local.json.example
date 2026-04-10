@@ -1,4 +1,5 @@
 {
+  "_comment": "Copy this to <project>/.claude/settings.local.json for projects that use MemPalace.",
   "hooks": {
     "UserPromptSubmit": [
       {

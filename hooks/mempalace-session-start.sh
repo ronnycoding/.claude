@@ -1,12 +1,19 @@
 #!/bin/bash
 # MemPalace UserPromptSubmit Hook
 
-MEMPALACE="$HOME/Library/Python/3.9/bin/mempalace"
+MEMPALACE=$(command -v mempalace 2>/dev/null || ls "$HOME"/Library/Python/*/bin/mempalace 2>/dev/null | tail -1)
 GLOBAL_CONFIG="$HOME/.mempalace/config.json"
 LOG_DIR="$HOME/.mempalace/hook_state"
 LOG="$LOG_DIR/init.log"
 
 mkdir -p "$LOG_DIR"
+
+# Bail early if mempalace is not installed
+if [ ! -f "$MEMPALACE" ]; then
+    echo '{}'
+    exit 0
+fi
+
 mkdir -p "$HOME/.mempalace"
 
 # Log immediately to confirm the hook fired
