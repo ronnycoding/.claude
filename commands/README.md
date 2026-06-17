@@ -20,6 +20,8 @@ Comprehensive documentation for all Claude Code slash commands and workflows.
 - [Content Generation Commands](#content-generation-commands)
   - [/nlm-research - Research Generator](#nlm-research---notebooklm-research-generator)
   - [/tiktok-tech - TikTok Scripts](#tiktok-tech---tiktok-tech-news-digest)
+- [BMAD Commands](#bmad-commands)
+  - [/bmad-master - Full Autonomous Pipeline](#bmad-master---full-autonomous-bmad-pipeline)
 - [Development Commands](#development-commands)
   - [/prompt - Prompt Engineering](#prompt---prompt-engineering)
 
@@ -797,6 +799,51 @@ Generate comprehensive, bilingual TikTok scripts covering multiple tech stories.
 - Multi-story deep dives
 - Educational tech content
 - Professional developer updates
+
+---
+
+## BMAD Commands
+
+### `/bmad-master` - Full Autonomous BMAD Pipeline
+
+Runs the complete BMAD development lifecycle from product brief to production-ready code — **no user approvals required**. Parallel agent execution for independent stories.
+
+**Usage:**
+```bash
+/bmad-master "A task management app for remote teams with real-time collaboration"
+```
+
+**Pipeline Phases (fully autonomous):**
+
+| # | Phase | Skill | Output |
+|---|-------|-------|--------|
+| 1 | Product Brief | `bmad-product-brief --autonomous` | `product-brief.md` |
+| 2 | PRD | `bmad-create-prd` | `prd.md` |
+| 3 | UX Design | `bmad-create-ux-design` | `ux-design.md` |
+| 4 | Architecture | `bmad-create-architecture` | `architecture.md` |
+| 5 | Epics & Stories | `bmad-create-epics-and-stories` | `epics-and-stories.md` |
+| 6 | Readiness Check | `bmad-check-implementation-readiness` | validation report |
+| 7 | Sprint Planning | `bmad-sprint-planning` | `sprint-status.yaml` |
+| 8 | Story Files | `bmad-create-story` × N | story files |
+| 9 | Dev (parallel) | `bmad-dev-story` × N | implemented code |
+
+**Autonomous Behavior:**
+- All BMAD menus auto-selected (no "shall I proceed?" halts)
+- Tech stack defaults: React+TS / Node.js / PostgreSQL / Redis (overridden by PRD)
+- Stories executed in parallel tiers based on dependency graph
+- Genuine blockers (missing credentials, contradictory requirements) are logged and skipped — pipeline continues
+
+**Parallel Dev Execution:**
+Stories are grouped into dependency tiers. All stories in a tier run in parallel via background agents:
+```
+Tier 0 (parallel): auth, DB schema, shared components
+Tier 1 (parallel): feature stories (depend on T0)
+Tier 2 (parallel): integration flows (depend on T1)
+```
+
+**Requirements:**
+- BMAD skills installed in `.claude/skills/` (heavyduty project or similar)
+- `_bmad/bmm/config.yaml` present in project root
 
 ---
 
