@@ -22,6 +22,8 @@ Comprehensive documentation for all Claude Code slash commands and workflows.
   - [/tiktok-tech - TikTok Scripts](#tiktok-tech---tiktok-tech-news-digest)
 - [BMAD Commands](#bmad-commands)
   - [/bmad-master - Full Autonomous Pipeline](#bmad-master---full-autonomous-bmad-pipeline)
+- [DevOps & Infrastructure Commands](#devops--infrastructure-commands)
+  - [/cicd - GitHub Actions + Terraform Bootstrap](#cicd---github-actions--terraform-bootstrap)
 - [Development Commands](#development-commands)
   - [/prompt - Prompt Engineering](#prompt---prompt-engineering)
 
@@ -844,6 +846,33 @@ Tier 2 (parallel): integration flows (depend on T1)
 **Requirements:**
 - BMAD skills installed in `.claude/skills/` (heavyduty project or similar)
 - `_bmad/bmm/config.yaml` present in project root
+
+---
+
+## DevOps & Infrastructure Commands
+
+### `/cicd` - GitHub Actions + Terraform Bootstrap
+
+Scaffold production-grade CI/CD for the current repo: GitHub Actions workflows driving Terraform IaC against a user-selected cloud provider. Uses the **AskUserQuestion** tool to choose provider/auth/state, and mirrors the `shipeasecommerce/myheavyduty` reference (keyless OIDC, remote locked state, plan-on-PR / apply-on-main).
+
+**Usage:**
+```bash
+/cicd                                  # interactive — inspects repo, then asks
+/cicd "Cloud Run service + static landing"
+```
+
+**What it generates:**
+
+| Area | Output |
+|------|--------|
+| Terraform | `terraform/` with `backend.tf`, `providers.tf`, `variables.tf`, `main.tf`, and module-per-resource layout |
+| Workflow | `.github/workflows/terraform.yml` — plan on PR (sticky comment), apply on main, state-lock `concurrency`, OIDC auth |
+| App deploy | Build/push + deploy workflows for selected targets (container/static/serverless) |
+| Handoff | Bootstrap checklist (OIDC federation, state backend, `gh secret set` names) + `/pr` |
+
+**Supported providers:** GCP (WIF + GCS — reference), AWS (IAM OIDC role + S3/DynamoDB), Azure (federated cred + azurerm).
+
+**Principles enforced:** keyless auth by default, remote locked state, least-privilege `permissions:`, pinned versions, never `terraform destroy` in CI.
 
 ---
 
