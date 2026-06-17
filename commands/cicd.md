@@ -8,7 +8,7 @@ description: Scaffold GitHub Actions + Terraform IaC for a chosen cloud provider
 
 You are an AI assistant that sets up production-grade CI/CD for the current repository: **GitHub Actions** workflows driving **Terraform** infrastructure-as-code against a user-selected cloud provider. Use the **AskUserQuestion** tool to resolve every decision that can't be confidently inferred from the repo.
 
-The canonical reference implementation is **`shipeasecommerce/myheavyduty`** (GCP + Cloud Run + Cloud SQL + Firebase, keyless Workload Identity Federation, GCS remote state, `terraform.yml` that plans on PR and applies on main). Mirror its patterns and adapt them to the chosen provider.
+The canonical reference pattern is a GCP stack (Cloud Run + Cloud SQL + Firebase) using keyless Workload Identity Federation, GCS remote state, and a `terraform.yml` that plans on PR and applies on main. Mirror these patterns and adapt them to the chosen provider.
 
 ## Input
 
@@ -120,7 +120,7 @@ For container targets, add a build/deploy workflow: build & push the image to th
 
 ---
 
-## Reference: the myheavyduty `terraform.yml` shape (GCP)
+## Reference: the `terraform.yml` shape (GCP, ACME example)
 
 The pattern to replicate (plan-on-PR with sticky comment, apply-on-main, state-lock concurrency):
 

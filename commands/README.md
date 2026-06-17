@@ -853,7 +853,7 @@ Tier 2 (parallel): integration flows (depend on T1)
 
 ### `/cicd` - GitHub Actions + Terraform Bootstrap
 
-Scaffold production-grade CI/CD for the current repo: GitHub Actions workflows driving Terraform IaC against a user-selected cloud provider. Uses the **AskUserQuestion** tool to choose provider/auth/state, and mirrors the `shipeasecommerce/myheavyduty` reference (keyless OIDC, remote locked state, plan-on-PR / apply-on-main).
+Scaffold production-grade CI/CD for the current repo: GitHub Actions workflows driving Terraform IaC against a user-selected cloud provider. Uses the **AskUserQuestion** tool to choose provider/auth/state, and mirrors a proven GCP reference pattern (keyless OIDC, remote locked state, plan-on-PR / apply-on-main).
 
 **Usage:**
 ```bash
